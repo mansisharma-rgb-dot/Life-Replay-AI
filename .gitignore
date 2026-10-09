@@ -1,0 +1,30 @@
+# Environment variables
+.env
+.env.local
+
+# Build output
+node_modules/
+dist/
+build/
+*.pyc
+__pycache__/
+
+# Database & Data files
+*.db
+*.sqlite
+*.sqlite3
+instance/
+backend/instance/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MacOS
+.DS_Store
+
+# Temporary & Debug files
+*.log
+scratch/

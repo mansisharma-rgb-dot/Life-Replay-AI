@@ -1,0 +1,7 @@
+/*
+  index.css — forwards to the real design system.
+  All Tailwind directives and custom utilities live in:
+  src/styles/globals.css  (imported by main.jsx)
+
+  This file is kept for Vite's default import resolution.
+*/
