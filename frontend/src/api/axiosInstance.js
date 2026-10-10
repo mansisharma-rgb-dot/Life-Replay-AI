@@ -1,8 +1,12 @@
 import axios from 'axios'
 
 // ─── Base Axios Instance ──────────────────────────────────────────────────────
+const defaultBaseURL = import.meta.env.PROD
+  ? 'https://life-replay-ai.onrender.com/api'
+  : '/api'
+
 const axiosInstance = axios.create({
-  baseURL:         import.meta.env.VITE_API_URL || '/api',
+  baseURL:         import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || defaultBaseURL,
   timeout:         30000,
   withCredentials: true,   // send HttpOnly refresh-token cookie
   headers: { 'Content-Type': 'application/json' },
