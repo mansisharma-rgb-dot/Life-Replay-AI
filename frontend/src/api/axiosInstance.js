@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 // ─── Base Axios Instance ──────────────────────────────────────────────────────
-const defaultBaseURL = import.meta.env.PROD
-  ? 'https://life-replay-ai.onrender.com/api'
-  : '/api'
+const defaultBaseURL = '/api'
 
 const axiosInstance = axios.create({
   baseURL:         import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || defaultBaseURL,
@@ -20,7 +18,8 @@ axiosInstance.interceptors.request.use(
     try {
       const { default: useAuthStore } = await import('@store/authStore')
       const token = useAuthStore.getState().accessToken
-      if (token) config.headers['Authorization'] = `Bearer ${token}`
+      const isRefreshRequest = config.url?.includes('/auth/refresh')
+      if (token && !isRefreshRequest) config.headers['Authorization'] = `Bearer ${token}`
     } catch { /* store not initialised yet — skip */ }
     return config
   },
