@@ -188,10 +188,10 @@ export default function HabitsPage() {
       </div>
 
       {/* ── Main Content Area ────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
         
         {/* Left Column: Habits List */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-8 space-y-4">
           <div className="flex items-center gap-2 sm:gap-4 border-b border-white/10 pb-2 overflow-x-auto scrollbar-hide">
             {['All Habits', 'Active', 'Completed', 'Paused'].map(tab => (
               <button 
@@ -278,7 +278,7 @@ export default function HabitsPage() {
         </div>
 
         {/* Right Column: Habit Stats Sidebar */}
-        <div className="space-y-4">
+        <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-20 self-start">
           <div className="glass-card p-6 border-white/5">
             <div className="text-center mb-6">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-400 mb-3 border border-orange-500/20 shadow-[0_0_15px_rgba(249,115,22,0.15)]">

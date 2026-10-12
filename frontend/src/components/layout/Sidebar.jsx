@@ -124,12 +124,15 @@ function SideNavItem({ item, collapsed }) {
         <>
           {/* Active glow indicator */}
           {active && (
-            <motion.div
-              layoutId="active-nav"
-              className="absolute inset-0 rounded-xl bg-violet-600/20 border border-violet-500/40"
-              style={{ boxShadow: '0 0 12px rgba(139,92,246,0.25), inset 0 1px 0 rgba(255,255,255,0.05)' }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            />
+            <>
+              <motion.div
+                layoutId="active-nav"
+                className="absolute inset-0 rounded-xl bg-violet-600/20 border border-violet-500/40"
+                style={{ boxShadow: '0 0 12px rgba(139,92,246,0.25), inset 0 1px 0 rgba(255,255,255,0.05)' }}
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              />
+              <div className="absolute left-0 top-2 bottom-2 w-1 bg-violet-400 rounded-r-full shadow-[0_0_8px_rgba(167,139,250,0.8)] z-20" />
+            </>
           )}
 
           {/* Icon */}
@@ -154,7 +157,7 @@ function SideNavItem({ item, collapsed }) {
               >
                 <span className={clsx(
                   'text-sm font-medium flex-1',
-                  active ? 'text-white' : '',
+                  active ? 'text-white font-semibold' : '',
                 )}>
                   {label}
                 </span>
@@ -174,6 +177,13 @@ function SideNavItem({ item, collapsed }) {
           {collapsed && badge && (
             <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-violet-500" />
           )}
+
+          {/* Tooltip on hover when collapsed (Desktop) */}
+          {collapsed && (
+            <div className="absolute left-full ml-3 px-2.5 py-1 rounded-lg bg-slate-900/95 border border-white/10 text-xs font-semibold text-white shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity z-50 whitespace-nowrap">
+              {label}
+            </div>
+          )}
         </>
       )}
     </NavLink>
@@ -192,10 +202,10 @@ export default function Sidebar({ collapsed, onToggle }) {
         'flex-col overflow-hidden select-none',
       )}
       style={{
-        background: 'rgba(12, 10, 22, 0.45)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        boxShadow: '4px 0 32px rgba(0,0,0,0.3)',
+        background: 'rgba(10, 8, 20, 0.75)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        boxShadow: '4px 0 32px rgba(0,0,0,0.4)',
       }}
     >
       {/* Logo */}

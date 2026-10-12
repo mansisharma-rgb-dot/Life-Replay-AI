@@ -88,7 +88,7 @@ export default function AppLayout() {
               animate="animate"
               exit="exit"
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="px-3.5 sm:px-6 py-4 sm:py-6 pb-28 md:pb-8 min-h-[calc(100vh-3.5rem)]"
+              className="w-full px-3.5 sm:px-6 lg:px-8 xl:px-10 py-4 sm:py-6 lg:py-8 pb-28 md:pb-10 min-h-[calc(100vh-3.5rem)] max-w-7xl xl:max-w-[1440px] 2xl:max-w-[1560px] mx-auto"
             >
               <Outlet />
             </motion.div>

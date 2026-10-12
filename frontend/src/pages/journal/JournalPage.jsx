@@ -84,10 +84,10 @@ export default function JournalPage() {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* ── Left Column: Journal List ────────────────────────────────────────── */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-8 space-y-4">
           
           {/* Search & Filter Bar */}
           <div className="flex gap-3">
@@ -193,7 +193,7 @@ export default function JournalPage() {
         </div>
 
         {/* ── Right Column: Stats Sidebar ──────────────────────────────────────── */}
-        <div className="space-y-4">
+        <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-20 self-start">
           <div className="glass-card p-6 border-white/5">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
               <TrendingUp size={16} className="text-amber-500" />

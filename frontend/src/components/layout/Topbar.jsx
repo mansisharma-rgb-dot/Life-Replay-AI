@@ -65,6 +65,19 @@ function SearchBar() {
     return () => clearTimeout(delayDebounceFn)
   }, [searchQuery])
 
+  // Handle keyboard shortcut (Cmd+K / Ctrl+K) on desktop
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        const input = searchRef.current?.querySelector('input')
+        input?.focus()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   return (
     <div className="relative" ref={searchRef}>
       <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 focus-within:border-violet-500/50 transition-colors" style={{ background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(12px)' }}>
@@ -74,13 +87,19 @@ function SearchBar() {
           onChange={e => setSearchQuery(e.target.value)}
           onFocus={() => { if (searchQuery.length >= 2) setShowSearchResults(true) }}
           placeholder="Search..."
-          className="w-20 sm:w-40 bg-transparent text-sm text-slate-100 placeholder-slate-500 outline-none transition-all focus:w-32 sm:focus:w-48"
+          className="w-20 sm:w-40 lg:w-48 xl:w-64 bg-transparent text-sm text-slate-100 placeholder-slate-500 outline-none transition-all focus:w-32 sm:focus:w-48 lg:focus:w-60 xl:focus:w-72"
         />
-        {isSearching && <Loader2 className="w-3.5 h-3.5 text-slate-400 animate-spin" />}
+        {isSearching ? (
+          <Loader2 className="w-3.5 h-3.5 text-slate-400 animate-spin" />
+        ) : (
+          <kbd className="hidden lg:inline-flex items-center text-[10px] font-mono font-medium text-slate-400 bg-white/5 border border-white/10 px-1.5 py-0.5 rounded shadow-sm">
+            ⌘K
+          </kbd>
+        )}
       </div>
 
       {showSearchResults && (
-        <div className="absolute top-full mt-2 w-72 right-0 bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden">
+        <div className="absolute top-full mt-2 w-72 lg:w-80 right-0 bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden">
           {searchResults ? (
             <div className="max-h-96 overflow-y-auto py-2">
               {Object.entries(searchResults).map(([category, items]) => {
@@ -391,6 +410,22 @@ export default function Topbar({ sidebarCollapsed, onOpenMobileDrawer }) {
             Life Replay AI
           </span>
         </div>
+      </div>
+
+      {/* Desktop-only Center Status */}
+      <div className="hidden lg:flex items-center gap-2.5">
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.07] text-xs text-slate-300">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-medium text-slate-300 text-[11px] uppercase tracking-wider">
+            {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+          </span>
+        </div>
+        {user?.current_streak !== undefined && user?.current_streak > 0 && (
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold text-violet-300">
+            <span>🔥</span>
+            <span>{user.current_streak} Day Streak</span>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center gap-1 sm:gap-1.5">

@@ -191,7 +191,7 @@ export default function GoalsPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           <AnimatePresence>
             {goals.map(goal => {
               const progressPercent = Math.min(100, Math.round((goal.progress / goal.target) * 100)) || 0;

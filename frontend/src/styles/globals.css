@@ -393,3 +393,66 @@
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-8px); }
 }
+
+/* =============================================
+   DESKTOP-ONLY UI ENHANCEMENTS (>= 1024px)
+   Laptops (1024px, 1366px) & Desktops (1440px+)
+   Preserves mobile views (< 1024px) exactly as they are
+   ============================================= */
+
+@media (min-width: 1024px) {
+  /* Desktop content centering with spacious max-width */
+  .desktop-shell {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  /* Refined desktop scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.4);
+  }
+
+  /* Desktop card hover elevations */
+  .glass-card {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.25s ease;
+  }
+  .glass-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 92, 246, 0.12);
+  }
+
+  /* Desktop input comfort */
+  .input-field {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input-field:focus {
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+  }
+
+  /* Desktop button hover polish */
+  .btn-primary:hover {
+    transform: translateY(-1.5px);
+    box-shadow: 0 8px 25px -4px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Grid spacing helper for wide screens */
+  .desktop-grid-gap {
+    gap: 1.5rem;
+  }
+}
