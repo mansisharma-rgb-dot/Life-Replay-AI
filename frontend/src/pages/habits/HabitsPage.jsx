@@ -160,18 +160,18 @@ export default function HabitsPage() {
   return (
     <div className="animate-fade-in-up space-y-6 pb-12">
       {/* ── Header ───────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Habits</h1>
-          <p className="text-slate-400 text-sm mt-1">Build consistency, one habit at a time.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Habits</h1>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">Build consistency, one habit at a time.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="p-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-colors">
+        <div className="flex items-center gap-2.5 w-full sm:w-auto">
+          <button className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-colors">
             <CalendarIcon size={18} />
           </button>
           <button 
             onClick={() => handleOpenModal()}
-            className="flex items-center gap-2 bg-purple-600/80 hover:bg-purple-600 text-white px-4 py-2 rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] border border-purple-500/50 text-sm font-medium"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-purple-600/80 hover:bg-purple-600 text-white px-4 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] border border-purple-500/50 text-sm font-medium active:scale-95"
           >
             <Plus size={16} />
             <span>New Habit</span>
@@ -180,7 +180,7 @@ export default function HabitsPage() {
       </div>
 
       {/* ── Top Stat Cards ───────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         <StatCard title="Active Habits" value={activeHabitsCount} icon={<Target size={18} />} trend="+2 from last month" />
         <StatCard title="Completed Today" value={completedTodayCount} icon={<CheckCircle2 size={18} />} trend="Keep it up!" />
         <StatCard title="Current Streak" value={`${bestCurrentStreak} days`} icon={<Flame size={18} />} trend="One day at a time" />
@@ -188,16 +188,16 @@ export default function HabitsPage() {
       </div>
 
       {/* ── Main Content Area ────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
         
         {/* Left Column: Habits List */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center gap-4 border-b border-white/10 pb-2">
+          <div className="flex items-center gap-2 sm:gap-4 border-b border-white/10 pb-2 overflow-x-auto scrollbar-hide">
             {['All Habits', 'Active', 'Completed', 'Paused'].map(tab => (
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`text-sm font-medium pb-2 -mb-2.5 transition-colors border-b-2 ${
+                className={`text-xs sm:text-sm font-medium pb-2 -mb-2.5 transition-colors border-b-2 whitespace-nowrap shrink-0 px-1 ${
                   activeTab === tab ? 'text-white border-purple-500' : 'text-slate-400 border-transparent hover:text-white'
                 }`}
               >

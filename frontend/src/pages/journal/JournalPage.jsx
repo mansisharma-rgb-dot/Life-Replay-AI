@@ -73,12 +73,12 @@ export default function JournalPage() {
   return (
     <div className="animate-fade-in-up space-y-6 pb-12">
       {/* ── Header ───────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">My Journal</h1>
-          <p className="text-slate-400 text-sm mt-1">Capture your thoughts, reflections & moments.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">My Journal</h1>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">Capture your thoughts, reflections & moments.</p>
         </div>
-        <button className="flex items-center gap-2 bg-amber-600/80 hover:bg-amber-600 text-white px-4 py-2 rounded-xl transition-all shadow-[0_0_15px_rgba(217,119,6,0.3)] hover:shadow-[0_0_20px_rgba(217,119,6,0.5)] border border-amber-500/50 text-sm font-medium">
+        <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-amber-600/80 hover:bg-amber-600 text-white px-4 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(217,119,6,0.3)] hover:shadow-[0_0_20px_rgba(217,119,6,0.5)] border border-amber-500/50 text-sm font-medium active:scale-95">
           <PenTool size={16} />
           <span>New Entry</span>
         </button>
@@ -274,7 +274,7 @@ export default function JournalPage() {
                   <textarea 
                     value={formData.content}
                     onChange={e => setFormData({...formData, content: e.target.value})}
-                    className="w-full flex-grow min-h-[400px] bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-slate-200 focus:outline-none focus:border-amber-500/50 transition-colors placeholder:text-slate-600 resize-y leading-relaxed font-serif text-[15px]"
+                    className="w-full flex-grow min-h-[180px] sm:min-h-[340px] bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-slate-200 focus:outline-none focus:border-amber-500/50 transition-colors placeholder:text-slate-600 resize-y leading-relaxed font-serif text-[15px]"
                     placeholder="Write your thoughts here..."
                   />
                 </div>

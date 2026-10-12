@@ -128,14 +128,14 @@ export default function GoalsPage() {
   return (
     <div className="animate-fade-in-up space-y-6 pb-12">
       {/* ── Header ───────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Vision & Goals</h1>
-          <p className="text-slate-400 text-sm mt-1">Set your sights high and track your journey.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Vision & Goals</h1>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">Set your sights high and track your journey.</p>
         </div>
         <button 
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-cyan-600/80 hover:bg-cyan-600 text-white px-4 py-2 rounded-xl transition-all shadow-[0_0_15px_rgba(8,145,178,0.3)] hover:shadow-[0_0_20px_rgba(8,145,178,0.5)] border border-cyan-500/50 text-sm font-medium"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-cyan-600/80 hover:bg-cyan-600 text-white px-4 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(8,145,178,0.3)] hover:shadow-[0_0_20px_rgba(8,145,178,0.5)] border border-cyan-500/50 text-sm font-medium active:scale-95"
         >
           <Plus size={16} />
           <span>New Goal</span>
@@ -143,7 +143,7 @@ export default function GoalsPage() {
       </div>
 
       {/* ── Top Stat Cards ───────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 mb-6 sm:mb-8">
         <div className="glass-card p-5 flex items-center justify-between border-white/5">
           <div>
             <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Total Goals</p>
@@ -320,7 +320,7 @@ export default function GoalsPage() {
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Current Progress</label>
                     <input 
@@ -346,7 +346,7 @@ export default function GoalsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Category</label>
                     <input 

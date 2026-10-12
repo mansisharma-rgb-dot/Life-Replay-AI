@@ -190,29 +190,29 @@ export default function DashboardPage() {
         {/* Subtle purple glow top-right */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/15 rounded-full blur-[60px] pointer-events-none" />
 
-        <div className="relative z-10 flex items-center justify-between gap-6 p-6 sm:p-8">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 p-4.5 sm:p-6 lg:p-8">
           {/* Left: Greeting */}
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-1.5">
+          <div className="flex-1">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-1">
               {greeting}, {firstName}{' '}
               <span className="inline-block animate-bounce-subtle">👋</span>
             </h1>
-            <p className="text-sm text-slate-400 font-medium">
+            <p className="text-xs sm:text-sm text-slate-400 font-medium">
               Here's your journey overview for today
             </p>
 
             {/* Quick action buttons */}
-            <div className="flex flex-wrap items-center gap-3 mt-5">
-              <Link to="/checkin" className="btn-primary py-2 px-5 text-sm">
-                <Target className="w-4 h-4" />
-                Start Check-in
+            <div className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:items-center sm:gap-3 mt-4 sm:mt-5">
+              <Link to="/checkin" className="btn-primary py-2.5 px-4 text-xs sm:text-sm justify-center">
+                <Target className="w-4 h-4 shrink-0" />
+                <span className="truncate">Start Check-in</span>
               </Link>
               <Link
                 to="/replay"
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-xl font-semibold text-sm text-violet-300 border border-violet-500/30 bg-violet-500/10 hover:bg-violet-500/20 transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-violet-300 border border-violet-500/30 bg-violet-500/10 hover:bg-violet-500/20 active:scale-95 transition-all duration-200"
               >
-                <span className="text-base">✨</span>
-                AI Replay
+                <span className="text-sm">✨</span>
+                <span className="truncate">AI Replay</span>
               </Link>
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function DashboardPage() {
       </motion.div>
 
       {/* ── Row 1: 4 Stat Cards ───────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
         <GamificationCard delay={0.05} />
         <StatCard
           title="Tasks Completed"

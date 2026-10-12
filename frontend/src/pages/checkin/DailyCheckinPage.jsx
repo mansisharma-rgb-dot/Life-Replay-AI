@@ -119,12 +119,12 @@ export default function CheckinWizard() {
     }
 
     return (
-        <div className="min-h-screen text-slate-100 flex flex-col pb-20">
+        <div className="min-h-screen text-slate-100 flex flex-col pb-24 md:pb-20">
             {currentStep < totalSteps && (
                 <ProgressIndicator currentStep={currentStep} totalSteps={totalSteps - 1} />
             )}
 
-            <div className="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
+            <div className="flex-1 max-w-4xl mx-auto w-full px-3 sm:px-4 py-4 sm:py-8">
                 {currentStep < totalSteps && (
                     <div className="flex justify-end mb-4">
                         <div className="text-xs text-gray-500 flex items-center gap-2">
@@ -147,23 +147,23 @@ export default function CheckinWizard() {
                 </AnimatePresence>
 
                 {currentStep < totalSteps && (
-                    <div className="flex justify-between items-center mt-12 pt-6 border-t border-white/10">
+                    <div className="flex justify-between items-center mt-8 sm:mt-12 pt-4 sm:pt-6 border-t border-white/10 gap-3">
                         <button 
                             onClick={prevStep}
                             disabled={currentStep === 1 || isSaving}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-colors ${
-                                currentStep === 1 ? 'opacity-0 cursor-default' : 'hover:bg-white/10 text-gray-300'
+                            className={`flex items-center gap-1.5 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-medium text-xs sm:text-sm transition-colors ${
+                                currentStep === 1 ? 'opacity-0 pointer-events-none' : 'hover:bg-white/10 text-gray-300 active:scale-95'
                             }`}
                         >
-                            <ChevronLeft className="w-5 h-5" /> Back
+                            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /> Back
                         </button>
                         
                         <button 
                             onClick={nextStep}
                             disabled={isSaving}
-                            className="px-8 py-3 rounded-xl font-semibold flex items-center gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:scale-105 transition-all"
+                            className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)] active:scale-95 transition-all"
                         >
-                            {currentStep === totalSteps - 1 ? 'Submit Check-in' : 'Continue'} <ChevronRight className="w-5 h-5" />
+                            <span>{currentStep === totalSteps - 1 ? 'Submit Check-in' : 'Continue'}</span> <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                     </div>
                 )}

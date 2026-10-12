@@ -12,6 +12,7 @@ import {
   ChevronDown,
   X,
   Loader2,
+  Menu,
 } from 'lucide-react'
 import { useAuth }         from '@context/AuthContext'
 import { useTheme }        from '@context/ThemeContext'
@@ -348,7 +349,7 @@ function UserMenu({ user }) {
 }
 
 // ─── Main Topbar ──────────────────────────────────────────────────────────────
-export default function Topbar({ sidebarCollapsed }) {
+export default function Topbar({ sidebarCollapsed, onOpenMobileDrawer }) {
   const { user }               = useAuth()
   const { theme, toggleTheme } = useTheme()
 
@@ -357,27 +358,49 @@ export default function Topbar({ sidebarCollapsed }) {
       className={clsx(
         'fixed top-0 right-0 z-30 h-14',
         'border-b border-white/[0.06]',
-        'flex items-center justify-between px-5',
+        'flex items-center justify-between px-3 sm:px-5',
         'transition-all duration-300',
-        sidebarCollapsed ? 'left-[72px]' : 'left-[260px]',
+        'left-0',
+        sidebarCollapsed ? 'md:left-[72px]' : 'md:left-[260px]',
       )}
       style={{
-        background: 'rgba(9,14,26,0.4)',
+        background: 'rgba(9,14,26,0.7)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
       }}
     >
       <div className="flex items-center gap-2">
+        <button
+          onClick={onOpenMobileDrawer}
+          className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/10 text-slate-300 hover:text-white active:scale-95 transition-all"
+          aria-label="Open navigation menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        <div className="flex md:hidden items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-surface-800 border border-violet-500/30 flex items-center justify-center overflow-hidden">
+            <img
+              src="/logo-icon.png"
+              alt="Life Replay AI"
+              className="w-full h-full object-cover"
+              onError={(e) => { e.target.style.display = 'none' }}
+            />
+          </div>
+          <span className="text-xs font-bold text-white tracking-tight truncate max-w-[120px] sm:max-w-none">
+            Life Replay AI
+          </span>
+        </div>
       </div>
 
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1 sm:gap-1.5">
         <SearchBar />
         <NotificationBell />
 
         {/* Theme toggle */}
         <button
           onClick={toggleTheme}
-          className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-all duration-200"
+          className="hidden sm:flex w-8 h-8 items-center justify-center rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-all duration-200"
           aria-label="Toggle theme"
         >
           {theme === 'dark'
@@ -387,7 +410,7 @@ export default function Topbar({ sidebarCollapsed }) {
         </button>
 
         {/* Divider */}
-        <div className="w-px h-5 bg-white/10 mx-1.5" />
+        <div className="hidden sm:block w-px h-5 bg-white/10 mx-1.5" />
 
         {/* User menu */}
         <UserMenu user={user} />

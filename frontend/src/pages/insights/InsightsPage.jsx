@@ -40,22 +40,22 @@ export default function InsightsPage() {
     <div className="space-y-8 animate-fade-in pb-20">
       
       {/* ─── Header & Actions ────────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 relative z-10">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-            <BrainCircuit className="w-8 h-8 text-indigo-400" />
-            AI Growth Analyzer
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2.5 sm:gap-3">
+            <BrainCircuit className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-400 shrink-0" />
+            <span>AI Growth Analyzer</span>
           </h1>
-          <p className="text-slate-400 mt-1">Personalized intelligence based on your habits and behavior.</p>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">Personalized intelligence based on your habits and behavior.</p>
         </div>
         
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="glass-card p-1.5 flex items-center bg-black/40 rounded-xl overflow-hidden border border-white/5 shadow-inner">
+        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto overflow-x-auto scrollbar-hide pb-1 sm:pb-0">
+          <div className="glass-card p-1 sm:p-1.5 flex items-center bg-black/40 rounded-xl overflow-hidden border border-white/5 shadow-inner shrink-0">
             {['7d', '30d', '90d', '1y'].map((range) => (
               <button
                 key={range}
                 onClick={() => setTimeRange(range)}
-                className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
+                className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all duration-300 whitespace-nowrap ${
                   timeRange === range 
                     ? 'bg-indigo-600/80 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)] border border-indigo-500/50' 
                     : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'

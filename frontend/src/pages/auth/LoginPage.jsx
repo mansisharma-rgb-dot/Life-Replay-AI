@@ -270,9 +270,9 @@ export default function LoginPage() {
       {/* ========================================================================= */}
       {/* RIGHT SECTION: Centered Login Card & Form (Responsive for all screens)   */}
       {/* ========================================================================= */}
-      <div className="flex-1 flex flex-col justify-between p-6 sm:p-8 lg:p-12 xl:p-16 min-h-screen relative z-10">
+      <div className="flex-1 flex flex-col justify-between p-4 sm:p-8 lg:p-12 xl:p-16 min-h-screen relative z-10">
         {/* Mobile Header (Hidden on Desktop) */}
-        <div className="flex lg:hidden items-center justify-between mb-8">
+        <div className="flex lg:hidden items-center justify-between mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 backdrop-blur-sm">
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-glow-primary">
               <Compass className="w-3.5 h-3.5 text-white" strokeWidth={2.4} />
@@ -294,12 +294,12 @@ export default function LoginPage() {
         </div>
 
         {/* Centered Login Card Container */}
-        <div className="w-full max-w-[440px] mx-auto my-auto py-4">
+        <div className="w-full max-w-[440px] mx-auto my-auto py-2 sm:py-4">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="rounded-3xl bg-[#0e1424]/75 border border-white/[0.09] backdrop-blur-2xl p-7 sm:p-9 shadow-[0_16px_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+            className="rounded-3xl bg-[#0e1424]/75 border border-white/[0.09] backdrop-blur-2xl p-5 sm:p-8 shadow-[0_16px_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
           >
             {/* Top delicate subtle glow inside card */}
             <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-violet-400/40 to-transparent" />

@@ -8,7 +8,10 @@ def create_app(config_name=None):
         config_name = os.environ.get('FLASK_ENV', 'default')
 
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(config[config_name])
+    cfg = config[config_name]
+    app.config.from_object(cfg)
+    if hasattr(cfg, 'init_app'):
+        cfg.init_app(app)
 
     # Ensure the instance folder exists
     try:

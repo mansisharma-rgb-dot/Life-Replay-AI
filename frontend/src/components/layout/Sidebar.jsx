@@ -187,9 +187,9 @@ export default function Sidebar({ collapsed, onToggle }) {
       animate={{ width: collapsed ? 72 : 260 }}
       transition={{ type: 'spring', stiffness: 350, damping: 35 }}
       className={clsx(
-        'fixed left-0 top-0 bottom-0 z-40',
+        'hidden md:flex fixed left-0 top-0 bottom-0 z-40',
         'border-r border-white/[0.06]',
-        'flex flex-col overflow-hidden select-none',
+        'flex-col overflow-hidden select-none',
       )}
       style={{
         background: 'rgba(12, 10, 22, 0.45)',

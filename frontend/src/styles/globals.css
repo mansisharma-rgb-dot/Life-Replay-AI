@@ -16,20 +16,28 @@
     --transition-default:     0.2s ease;
     --transition-smooth:      0.35s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-spring:      0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --sat:                    env(safe-area-inset-top, 0px);
+    --sab:                    env(safe-area-inset-bottom, 0px);
+    --sal:                    env(safe-area-inset-left, 0px);
+    --sar:                    env(safe-area-inset-right, 0px);
   }
 
   *, *::before, *::after {
     @apply border-slate-700/30;
+    -webkit-tap-highlight-color: transparent;
   }
 
   html {
     @apply scroll-smooth;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-surface-950 text-slate-100 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
   }
 
   /* Scrollbar styling */

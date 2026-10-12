@@ -565,7 +565,7 @@ export default function ProfilePage() {
         <div className="lg:col-span-7 space-y-6">
 
           {/* Module Tabs Navigation */}
-          <div className="bg-slate-900/60 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-1.5 flex flex-wrap gap-1 shadow-lg">
+          <div className="bg-slate-900/60 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-1.5 flex items-center gap-1.5 overflow-x-auto scrollbar-hide shadow-lg">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -574,7 +574,7 @@ export default function ProfilePage() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={clsx(
-                    "flex-1 min-w-[120px] py-2 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer",
+                    "flex-shrink-0 py-2 px-3.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap",
                     isActive
                       ? "bg-purple-600 text-white shadow-md shadow-purple-900/40"
                       : "text-slate-400 hover:text-white hover:bg-white/5"

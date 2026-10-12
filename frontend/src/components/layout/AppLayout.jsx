@@ -3,6 +3,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Sidebar from './Sidebar'
 import Topbar  from './Topbar'
+import MobileBottomNav from './MobileBottomNav'
+import MobileDrawer from './MobileDrawer'
 import GlobalBackground from './GlobalBackground'
 import clsx    from 'clsx'
 
@@ -16,6 +18,7 @@ const PAGE_VARIANTS = {
 
 export default function AppLayout() {
   const location = useLocation()
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
   const [collapsed, setCollapsed] = useState(() => {
     try {
@@ -42,24 +45,38 @@ export default function AppLayout() {
     return () => mql.removeEventListener('change', handler)
   }, [])
 
+  // Auto-close mobile drawer on route change
+  useEffect(() => {
+    setMobileDrawerOpen(false)
+  }, [location.pathname])
+
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-x-hidden">
       <GlobalBackground />
       
-      {/* Sidebar */}
+      {/* Sidebar (Desktop only) */}
       <div className="relative z-10">
         <Sidebar collapsed={collapsed} onToggle={toggleSidebar} />
       </div>
 
-      {/* Main wrapper */}
+      {/* Mobile Drawer */}
+      <MobileDrawer
+        isOpen={mobileDrawerOpen}
+        onClose={() => setMobileDrawerOpen(false)}
+      />
+
+      {/* Main wrapper: 0 margin on phone (< md), 72/260px on desktop (>= md) */}
       <div
         className={clsx(
-          'relative z-10 flex flex-col min-h-screen transition-all duration-300',
-          collapsed ? 'ml-[72px]' : 'ml-[260px]',
+          'relative z-10 flex flex-col min-h-screen transition-all duration-300 w-full',
+          collapsed ? 'ml-0 md:ml-[72px]' : 'ml-0 md:ml-[260px]',
         )}
       >
         {/* Topbar */}
-        <Topbar sidebarCollapsed={collapsed} />
+        <Topbar
+          sidebarCollapsed={collapsed}
+          onOpenMobileDrawer={() => setMobileDrawerOpen(true)}
+        />
 
         {/* Page content */}
         <main className="flex-1 pt-14">
@@ -71,13 +88,16 @@ export default function AppLayout() {
               animate="animate"
               exit="exit"
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="p-5 lg:p-6 min-h-[calc(100vh-3.5rem)]"
+              className="px-3.5 sm:px-6 py-4 sm:py-6 pb-28 md:pb-8 min-h-[calc(100vh-3.5rem)]"
             >
               <Outlet />
             </motion.div>
           </AnimatePresence>
         </main>
       </div>
+
+      {/* Bottom Navigation (Mobile only) */}
+      <MobileBottomNav />
     </div>
   )
 }

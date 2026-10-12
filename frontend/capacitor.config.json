@@ -1,0 +1,9 @@
+{
+  "appId": "com.lifereplay.ai",
+  "appName": "Life Replay AI",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "life-replay-ai-i4we.vercel.app"
+  }
+}
