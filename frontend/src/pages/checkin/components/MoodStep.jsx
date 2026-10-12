@@ -41,9 +41,9 @@ const MoodStep = React.memo(({ data, updateMood, updateWellbeing }) => {
 
     return (
         <motion.div 
-            initial={{ opacity: 0, x: 50 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            exit={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, y: 10 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            exit={{ opacity: 0, y: -10 }}
             className="space-y-8"
         >
             <div className="text-center mb-8">

@@ -68,8 +68,10 @@ export default function AppLayout() {
       {/* Main wrapper: 0 margin on phone (< md), 72/260px on desktop (>= md) */}
       <div
         className={clsx(
-          'relative z-10 flex flex-col min-h-screen transition-all duration-300 w-full',
-          collapsed ? 'ml-0 md:ml-[72px]' : 'ml-0 md:ml-[260px]',
+          'relative z-10 flex flex-col min-h-screen transition-all duration-300',
+          collapsed
+            ? 'w-full ml-0 md:ml-[72px] md:w-[calc(100%-72px)]'
+            : 'w-full ml-0 md:ml-[260px] md:w-[calc(100%-260px)]',
         )}
       >
         {/* Topbar */}

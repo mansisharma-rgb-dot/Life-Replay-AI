@@ -119,12 +119,12 @@ export default function CheckinWizard() {
     }
 
     return (
-        <div className="min-h-screen text-slate-100 flex flex-col pb-24 md:pb-20">
+        <div className="w-full max-w-4xl mx-auto text-slate-100 flex flex-col">
             {currentStep < totalSteps && (
                 <ProgressIndicator currentStep={currentStep} totalSteps={totalSteps - 1} />
             )}
 
-            <div className="flex-1 max-w-4xl mx-auto w-full px-3 sm:px-4 py-4 sm:py-8">
+            <div className="w-full">
                 {currentStep < totalSteps && (
                     <div className="flex justify-end mb-4">
                         <div className="text-xs text-gray-500 flex items-center gap-2">

@@ -16,7 +16,7 @@ const ProgressIndicator = React.memo(({ currentStep, totalSteps }) => {
     const quote = QUOTES[dayOfYear % QUOTES.length];
     
     return (
-        <div className="z-50 mt-6 mb-4 max-w-3xl mx-auto w-full px-4">
+        <div className="z-20 mb-6 w-full">
             <div className="glass-card p-5 border-white/10">
                 <div className="flex justify-between text-sm text-gray-400 mb-2 font-medium">
                     <span>Step {currentStep} of {totalSteps}</span>
