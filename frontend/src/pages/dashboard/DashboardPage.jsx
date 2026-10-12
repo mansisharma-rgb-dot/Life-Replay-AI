@@ -252,37 +252,31 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Row 2: Growth Overview (large) + Active Goals + Today's Habits ────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-12 gap-5">
-        {/* Growth Overview — spans 2 cols on lg, 6 cols on xl */}
-        <div className="lg:col-span-2 xl:col-span-6">
-          <MonthlyGrowthChart data={monthlyGrowth} delay={0.25} className="h-full min-h-[340px]" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="lg:col-span-1">
+          <MonthlyGrowthChart data={monthlyGrowth} delay={0.25} className="h-full min-h-[320px]" />
         </div>
 
         {/* Active Goals */}
-        <div className="lg:col-span-1 xl:col-span-3">
+        <div className="lg:col-span-1">
           <DashboardGoals goals={goals} isLoading={goalsLoading} error={goalsError} delay={0.30} />
         </div>
 
         {/* Today's Habits */}
-        <div className="lg:col-span-1 xl:col-span-3">
+        <div className="lg:col-span-1">
           <DashboardHabits habits={habits} isLoading={habitsLoading} error={habitsError} delay={0.35} />
         </div>
       </div>
 
-      {/* ── Row 3: Weekly Productivity + Activity Feed + AI Insights ─────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-12 gap-5">
-        {/* Weekly Productivity Chart — spans 2 cols on lg, 6 cols on xl */}
-        <div className="lg:col-span-2 xl:col-span-6 min-h-[340px]">
-          <WeeklyProductivityChart data={productivity} delay={0.40} />
+      {/* ── Row 3: Activity Feed + Weekly Productivity + AI Insights ─────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="lg:col-span-1 min-h-[320px]">
+          <ActivityFeed delay={0.40} />
         </div>
-
-        {/* Activity Feed */}
-        <div className="lg:col-span-1 xl:col-span-3 min-h-[340px]">
-          <ActivityFeed delay={0.45} />
+        <div className="lg:col-span-1 min-h-[320px]">
+          <WeeklyProductivityChart data={productivity} delay={0.45} />
         </div>
-
-        {/* AI Insights Card */}
-        <div className="lg:col-span-1 xl:col-span-3 min-h-[340px]">
+        <div className="lg:col-span-1 min-h-[320px]">
           <AIInsightsCard delay={0.50} />
         </div>
       </div>

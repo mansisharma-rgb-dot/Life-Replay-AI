@@ -86,7 +86,7 @@ class AchievementService:
             early_checkin = DailyCheckin.query.filter(
                 DailyCheckin.user_id == user_id,
                 DailyCheckin.created_at != None,
-                db.func.strftime('%H', DailyCheckin.created_at) < '08'
+                db.extract('hour', DailyCheckin.created_at) < 8
             ).first()
             if early_checkin:
                 to_unlock.append("early_bird")
@@ -96,7 +96,7 @@ class AchievementService:
             night_checkin = DailyCheckin.query.filter(
                 DailyCheckin.user_id == user_id,
                 DailyCheckin.created_at != None,
-                db.func.strftime('%H', DailyCheckin.created_at) >= '22'
+                db.extract('hour', DailyCheckin.created_at) >= 22
             ).first()
             if night_checkin:
                 to_unlock.append("night_owl")
@@ -137,6 +137,7 @@ class AchievementService:
         try:
             AchievementService.evaluate_user_achievements(user_id)
         except Exception as e:
+            db.session.rollback()
             print(f"Error evaluating achievements: {e}")
 
         # Fetch unlocked achievements from DB

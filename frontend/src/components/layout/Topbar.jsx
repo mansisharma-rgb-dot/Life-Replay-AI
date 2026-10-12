@@ -87,7 +87,7 @@ function SearchBar() {
           onChange={e => setSearchQuery(e.target.value)}
           onFocus={() => { if (searchQuery.length >= 2) setShowSearchResults(true) }}
           placeholder="Search..."
-          className="w-20 sm:w-40 lg:w-48 xl:w-64 bg-transparent text-sm text-slate-100 placeholder-slate-500 outline-none transition-all focus:w-32 sm:focus:w-48 lg:focus:w-60 xl:focus:w-72"
+          className="w-24 sm:w-40 md:w-48 lg:w-56 bg-transparent text-sm text-slate-100 placeholder-slate-500 outline-none transition-all focus:w-36 sm:focus:w-52 md:focus:w-64"
         />
         {isSearching ? (
           <Loader2 className="w-3.5 h-3.5 text-slate-400 animate-spin" />
@@ -410,22 +410,6 @@ export default function Topbar({ sidebarCollapsed, onOpenMobileDrawer }) {
             Life Replay AI
           </span>
         </div>
-      </div>
-
-      {/* Desktop-only Center Status */}
-      <div className="hidden lg:flex items-center gap-2.5">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.07] text-xs text-slate-300">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-medium text-slate-300 text-[11px] uppercase tracking-wider">
-            {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-          </span>
-        </div>
-        {user?.current_streak !== undefined && user?.current_streak > 0 && (
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold text-violet-300">
-            <span>🔥</span>
-            <span>{user.current_streak} Day Streak</span>
-          </div>
-        )}
       </div>
 
       <div className="flex items-center gap-1 sm:gap-1.5">

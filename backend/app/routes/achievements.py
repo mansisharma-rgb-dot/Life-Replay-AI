@@ -4,6 +4,7 @@ from app.services.achievement_service import AchievementService
 
 achievements_bp = Blueprint('achievements', __name__)
 
+@achievements_bp.route('', methods=['GET'])
 @achievements_bp.route('/', methods=['GET'])
 @jwt_required()
 def get_achievements():
