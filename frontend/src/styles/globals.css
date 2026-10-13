@@ -218,6 +218,36 @@
     @apply w-5 h-5 shrink-0 transition-colors duration-200;
   }
 
+  /* ── Mobile Design System Utilities ── */
+  .mobile-card {
+    background: rgba(14, 18, 30, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    @apply rounded-2xl p-4 sm:p-5 transition-all duration-200;
+  }
+
+  .mobile-card-subtle {
+    background: rgba(18, 22, 38, 0.50);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    @apply rounded-2xl p-3.5 sm:p-4;
+  }
+
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+    touch-action: manipulation;
+  }
+
+  .tap-press {
+    @apply active:scale-[0.98] transition-transform duration-150;
+  }
+
+  .pb-mobile-nav {
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+  }
+
   /* ── Skeleton Loader ── */
   .skeleton {
     border-radius: 0.5rem;

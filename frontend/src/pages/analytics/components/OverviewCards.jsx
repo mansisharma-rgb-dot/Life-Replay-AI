@@ -9,7 +9,7 @@ export default function OverviewCards({ data }) {
   if (!data) return null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
       <StatCard
         title="Average Life Score"
         value={data.averageLifeScore}

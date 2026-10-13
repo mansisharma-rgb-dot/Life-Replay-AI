@@ -183,37 +183,37 @@ const MonthlyReportPage = () => {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               
-              <div className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 backdrop-blur-md border border-indigo-500/20 rounded-2xl p-5 shadow-lg">
-                <p className="text-indigo-200 text-xs font-semibold mb-1 uppercase tracking-wider">Avg Life Score</p>
-                <div className="flex items-end space-x-2">
-                  <span className="text-3xl font-bold text-white">{reportData.metrics?.average_life_score ?? '-'}</span>
-                  <span className="text-indigo-300 text-xs mb-1">/ 100</span>
+              <div className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 backdrop-blur-md border border-indigo-500/20 rounded-2xl p-3.5 sm:p-5 shadow-lg">
+                <p className="text-indigo-200 text-2xs sm:text-xs font-semibold mb-1 uppercase tracking-wider">Avg Life Score</p>
+                <div className="flex items-end space-x-1.5 sm:space-x-2">
+                  <span className="text-2xl sm:text-3xl font-bold text-white">{reportData.metrics?.average_life_score ?? '-'}</span>
+                  <span className="text-indigo-300 text-2xs sm:text-xs mb-1">/ 100</span>
                 </div>
               </div>
               
-              <div className="bg-gradient-to-br from-emerald-900/40 to-teal-900/40 backdrop-blur-md border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
-                <p className="text-emerald-200 text-xs font-semibold mb-1 uppercase tracking-wider">Avg Mood</p>
-                <div className="flex items-end space-x-2">
-                  <span className="text-3xl font-bold text-white">{reportData.metrics?.average_mood ?? '-'}</span>
-                  <span className="text-emerald-300 text-xs mb-1">/ 10</span>
+              <div className="bg-gradient-to-br from-emerald-900/40 to-teal-900/40 backdrop-blur-md border border-emerald-500/20 rounded-2xl p-3.5 sm:p-5 shadow-lg">
+                <p className="text-emerald-200 text-2xs sm:text-xs font-semibold mb-1 uppercase tracking-wider">Avg Mood</p>
+                <div className="flex items-end space-x-1.5 sm:space-x-2">
+                  <span className="text-2xl sm:text-3xl font-bold text-white">{reportData.metrics?.average_mood ?? '-'}</span>
+                  <span className="text-emerald-300 text-2xs sm:text-xs mb-1">/ 10</span>
                 </div>
               </div>
               
-              <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/40 backdrop-blur-md border border-amber-500/20 rounded-2xl p-5 shadow-lg">
-                <p className="text-amber-200 text-xs font-semibold mb-1 uppercase tracking-wider">Deep Work</p>
-                <div className="flex items-end space-x-2">
-                  <span className="text-3xl font-bold text-white">
+              <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/40 backdrop-blur-md border border-amber-500/20 rounded-2xl p-3.5 sm:p-5 shadow-lg">
+                <p className="text-amber-200 text-2xs sm:text-xs font-semibold mb-1 uppercase tracking-wider">Deep Work</p>
+                <div className="flex items-end space-x-1.5 sm:space-x-2">
+                  <span className="text-2xl sm:text-3xl font-bold text-white">
                     {((reportData.metrics?.total_study_hours || 0) + (reportData.metrics?.total_work_hours || 0)).toFixed(1)}
                   </span>
-                  <span className="text-amber-300 text-xs mb-1">hrs</span>
+                  <span className="text-amber-300 text-2xs sm:text-xs mb-1">hrs</span>
                 </div>
               </div>
               
-              <div className="bg-gradient-to-br from-blue-900/40 to-cyan-900/40 backdrop-blur-md border border-blue-500/20 rounded-2xl p-5 shadow-lg">
-                <p className="text-blue-200 text-xs font-semibold mb-1 uppercase tracking-wider">Habit Consistency</p>
-                <div className="flex items-end space-x-2">
-                  <span className="text-3xl font-bold text-white">{reportData.metrics?.habit_completion_rate ?? 0}</span>
-                  <span className="text-blue-300 text-xs mb-1">%</span>
+              <div className="bg-gradient-to-br from-blue-900/40 to-cyan-900/40 backdrop-blur-md border border-blue-500/20 rounded-2xl p-3.5 sm:p-5 shadow-lg">
+                <p className="text-blue-200 text-2xs sm:text-xs font-semibold mb-1 uppercase tracking-wider">Habit Consistency</p>
+                <div className="flex items-end space-x-1.5 sm:space-x-2">
+                  <span className="text-2xl sm:text-3xl font-bold text-white">{reportData.metrics?.habit_completion_rate ?? 0}</span>
+                  <span className="text-blue-300 text-2xs sm:text-xs mb-1">%</span>
                 </div>
               </div>
               

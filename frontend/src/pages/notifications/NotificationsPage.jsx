@@ -57,11 +57,11 @@ export default function NotificationsPage() {
     <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 animate-fade-in pb-20">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-primary-400 tracking-tight flex items-center gap-3">
-            <Bell className="w-8 h-8 text-violet-400" />
+          <h1 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-primary-400 tracking-tight flex items-center gap-2.5 sm:gap-3">
+            <Bell className="w-6 h-6 sm:w-8 sm:h-8 text-violet-400" />
             Smart Notifications
           </h1>
-          <p className="text-slate-400 mt-2 text-lg">Stay aware of patterns that matter.</p>
+          <p className="text-slate-400 mt-1 sm:mt-2 text-sm sm:text-base">Stay aware of patterns that matter.</p>
         </div>
 
         {unreadCount > 0 && (

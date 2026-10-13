@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Trophy, Star, Target, Flame, Award, BookOpen, Sun, Moon, TrendingUp, Lock } from 'lucide-react';
 import { achievementsApi } from '../api/achievementsApi';
+import celestialMoon from '../assets/characters/celestial_moon.jpg';
 
 const iconMap = {
     Trophy: Trophy,
@@ -42,27 +43,34 @@ export default function AchievementsPage() {
     const unlockedCount = achievements.filter(a => a.is_unlocked).length;
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 animate-fade-in relative z-10 pb-20">
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-3">
-                        <Trophy className="w-8 h-8 text-amber-400" />
-                        Achievements
-                    </h1>
-                    <p className="text-slate-300 mt-2">Track your milestones and personal growth victories.</p>
+        <div className="max-w-6xl mx-auto space-y-4 sm:space-y-8 animate-fade-in relative z-10 pb-20">
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                <div className="flex items-center gap-3.5">
+                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl overflow-hidden shrink-0 border border-amber-400/40 shadow-[0_0_20px_rgba(251,191,36,0.35)]">
+                        <img src={celestialMoon} alt="Achievement Mascot" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+                            Achievements
+                        </h1>
+                        <p className="text-slate-300 mt-0.5 text-xs sm:text-sm">Celebrate every milestone on your growth journey.</p>
+                    </div>
                 </div>
-                <div className="glass-card px-6 py-3 border border-amber-500/20 shadow-glow-primary">
-                    <p className="text-sm text-amber-200/70 uppercase tracking-wider font-semibold">Unlocked</p>
-                    <p className="text-2xl font-bold text-amber-400">{unlockedCount} <span className="text-slate-500 text-lg">/ {achievements.length}</span></p>
+                <div className="bg-[#17132e] border border-amber-500/30 px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl shadow-[0_0_15px_rgba(251,191,36,0.2)] self-start sm:self-auto flex items-center gap-3">
+                    <div>
+                        <p className="text-[10px] text-amber-200/80 uppercase tracking-wider font-bold">Unlocked</p>
+                        <p className="text-xl sm:text-2xl font-black text-amber-400">{unlockedCount} <span className="text-slate-500 text-sm font-semibold">/ {achievements.length}</span></p>
+                    </div>
+                    <Trophy className="w-6 h-6 text-amber-400 shrink-0" />
                 </div>
             </header>
 
             {achievements.length === 0 ? (
-                <div className="glass-card p-12 text-center border-white/5">
-                    <p className="text-slate-400">Your achievements will appear here as you progress.</p>
+                <div className="mobile-card p-8 sm:p-12 text-center border-white/5">
+                    <p className="text-slate-400 text-sm">Your achievements will appear here as you progress.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
                     {achievements.map((ach) => {
                         const Icon = iconMap[ach.icon] || Trophy;
                         return (
@@ -71,7 +79,7 @@ export default function AchievementsPage() {
                                 layout
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className={`p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${
+                                className={`p-4 sm:p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${
                                     ach.is_unlocked 
                                     ? 'bg-gradient-to-br from-surface-800 to-surface-900 border-amber-500/30 shadow-glow-primary' 
                                     : 'bg-surface-900/50 border-white/5 opacity-70 grayscale hover:grayscale-0'

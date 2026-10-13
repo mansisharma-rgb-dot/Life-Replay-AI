@@ -1,24 +1,39 @@
+import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   LayoutDashboard,
+  TrendingUp,
   Target,
-  Flame,
   BookOpen,
-  Sparkles,
+  Compass,
 } from 'lucide-react'
 import clsx from 'clsx'
 
-const NAV_TABS = [
-  { to: '/dashboard', label: 'Home',     icon: LayoutDashboard },
-  { to: '/checkin',   label: 'Check-in', icon: Target, isPrimary: true },
-  { to: '/goals',     label: 'Goals',    icon: Flame },
-  { to: '/journal',   label: 'Journal',  icon: BookOpen },
-  { to: '/replay',    label: 'AI Replay', icon: Sparkles },
+const SECONDARY_ROUTES = [
+  '/goals',
+  '/habits',
+  '/insights',
+  '/replay',
+  '/goal-predictions',
+  '/reports',
+  '/calendar',
+  '/history',
+  '/time-analysis',
+  '/achievements',
+  '/profile',
+  '/notifications',
+  '/skills',
+  '/memories',
+  '/analytics',
 ]
 
-export default function MobileBottomNav() {
+export default function MobileBottomNav({ onOpenHub }) {
   const location = useLocation()
+
+  const isMoreActive = SECONDARY_ROUTES.some((route) =>
+    location.pathname.startsWith(route)
+  )
 
   return (
     <nav
@@ -29,71 +44,131 @@ export default function MobileBottomNav() {
         'select-none'
       )}
       style={{
-        background: 'rgba(9, 14, 26, 0.92)',
+        background: 'rgba(22, 18, 44, 0.96)',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
-        boxShadow: '0 -8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-        paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom, 0.5rem))',
+        boxShadow: '0 -6px 28px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+        paddingBottom: 'max(0.4rem, env(safe-area-inset-bottom, 0.4rem))',
       }}
     >
-      <div className="flex items-center justify-around px-2 pt-1.5 pb-1">
-        {NAV_TABS.map(({ to, label, icon: Icon, isPrimary }) => {
-          const isActive = location.pathname === to || location.pathname.startsWith(to + '/')
+      <div className="flex items-center justify-around px-2 py-1.5">
+        {/* 1. Home */}
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            clsx(
+              'relative flex items-center justify-center py-1 px-2.5 transition-all min-h-[46px] touch-target tap-press rounded-2xl',
+              isActive
+                ? 'bg-[#6c52d4] text-white shadow-[0_4px_16px_rgba(108,82,212,0.45)]'
+                : 'text-slate-400 hover:text-slate-200'
+            )
+          }
+        >
+          {({ isActive }) => (
+            <div className="flex items-center gap-1.5">
+              <LayoutDashboard className="w-4 h-4 text-white" />
+              <span className={clsx('text-xs font-semibold', isActive ? 'inline' : 'hidden')}>
+                Home
+              </span>
+            </div>
+          )}
+        </NavLink>
 
-          return (
-            <NavLink
-              key={to}
-              to={to}
-              className={clsx(
-                'relative flex flex-col items-center justify-center flex-1 py-1 px-1 transition-all duration-200 group min-h-[48px] touch-manipulation',
-                isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200'
-              )}
-            >
-              {/* Highlight pill / glow for active tab */}
-              {isActive && (
-                <motion.div
-                  layoutId="mobile-nav-pill"
-                  className={clsx(
-                    'absolute inset-x-2 -top-1 bottom-1 rounded-xl pointer-events-none',
-                    isPrimary
-                      ? 'bg-violet-500/20 border border-violet-500/40 shadow-[0_0_15px_rgba(139,92,246,0.3)]'
-                      : 'bg-white/[0.06] border border-white/10'
-                  )}
-                  transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-                />
-              )}
+        {/* 2. Progress */}
+        <NavLink
+          to="/progress"
+          className={({ isActive }) =>
+            clsx(
+              'relative flex items-center justify-center py-1 px-2.5 transition-all min-h-[46px] touch-target tap-press rounded-2xl',
+              isActive
+                ? 'bg-[#6c52d4] text-white shadow-[0_4px_16px_rgba(108,82,212,0.45)]'
+                : 'text-slate-400 hover:text-slate-200'
+            )
+          }
+        >
+          {({ isActive }) => (
+            <div className="flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4 text-white" />
+              <span className={clsx('text-xs font-semibold', isActive ? 'inline' : 'hidden')}>
+                Progress
+              </span>
+            </div>
+          )}
+        </NavLink>
 
-              {/* Icon container */}
+        {/* 3. Check-in (Prominent Center Button) */}
+        <NavLink
+          to="/checkin"
+          className={({ isActive }) =>
+            clsx(
+              'relative flex flex-col items-center justify-center flex-1 -mt-4 py-1 px-1 group touch-target tap-press'
+            )
+          }
+        >
+          {({ isActive }) => (
+            <>
               <div
                 className={clsx(
-                  'relative z-10 flex items-center justify-center w-6 h-6 transition-transform duration-200',
-                  isActive && 'scale-110',
-                  isPrimary && !isActive && 'text-violet-400'
+                  'w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-200 shadow-lg',
+                  isActive
+                    ? 'bg-gradient-to-tr from-violet-600 to-indigo-500 text-white ring-2 ring-violet-400/50 shadow-violet-500/40 scale-105'
+                    : 'bg-gradient-to-tr from-violet-700 to-purple-600 text-white shadow-purple-900/50 hover:brightness-110'
                 )}
               >
-                <Icon
-                  className={clsx(
-                    'w-5 h-5 transition-colors duration-200',
-                    isActive
-                      ? (isPrimary ? 'text-violet-300' : 'text-violet-400')
-                      : 'text-slate-400 group-hover:text-slate-200'
-                  )}
-                  strokeWidth={isActive ? 2.4 : 1.9}
-                />
+                <Target className="w-6 h-6" strokeWidth={2.4} />
               </div>
-
-              {/* Label */}
               <span
                 className={clsx(
-                  'relative z-10 text-[10px] tracking-tight mt-1 font-medium transition-colors duration-200 truncate max-w-[64px]',
-                  isActive ? 'text-white font-semibold' : 'text-slate-400'
+                  'text-[10px] mt-1 font-semibold truncate',
+                  isActive ? 'text-violet-300' : 'text-slate-300'
                 )}
               >
-                {label}
+                Check-in
               </span>
-            </NavLink>
-          )
-        })}
+            </>
+          )}
+        </NavLink>
+
+        {/* 4. Journal */}
+        <NavLink
+          to="/journal"
+          className={({ isActive }) =>
+            clsx(
+              'relative flex items-center justify-center py-1 px-2.5 transition-all min-h-[46px] touch-target tap-press rounded-2xl',
+              isActive
+                ? 'bg-[#6c52d4] text-white shadow-[0_4px_16px_rgba(108,82,212,0.45)]'
+                : 'text-slate-400 hover:text-slate-200'
+            )
+          }
+        >
+          {({ isActive }) => (
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-4 h-4 text-white" />
+              <span className={clsx('text-xs font-semibold', isActive ? 'inline' : 'hidden')}>
+                Journal
+              </span>
+            </div>
+          )}
+        </NavLink>
+
+        {/* 5. More / Hub */}
+        <button
+          onClick={onOpenHub}
+          className={clsx(
+            'relative flex items-center justify-center py-1 px-2.5 transition-all min-h-[46px] touch-target tap-press rounded-2xl',
+            isMoreActive
+              ? 'bg-[#6c52d4] text-white shadow-[0_4px_16px_rgba(108,82,212,0.45)]'
+              : 'text-slate-400 hover:text-slate-200'
+          )}
+          aria-label="Open More features menu"
+        >
+          <div className="flex items-center gap-1.5">
+            <Compass className="w-4 h-4 text-white" />
+            <span className={clsx('text-xs font-semibold', isMoreActive ? 'inline' : 'hidden')}>
+              More
+            </span>
+          </div>
+        </button>
       </div>
     </nav>
   )

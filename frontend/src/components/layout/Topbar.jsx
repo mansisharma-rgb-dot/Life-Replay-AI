@@ -78,16 +78,36 @@ function SearchBar() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
+
   return (
     <div className="relative" ref={searchRef}>
-      <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 focus-within:border-violet-500/50 transition-colors" style={{ background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(12px)' }}>
+      {/* Mobile search toggle button */}
+      <button
+        onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+        className="sm:hidden w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 active:scale-95 transition-all"
+        aria-label="Search"
+      >
+        <Search className="w-4 h-4" />
+      </button>
+
+      {/* Desktop Search input & Mobile Expandable input */}
+      <div
+        className={clsx(
+          'items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 focus-within:border-violet-500/50 transition-colors',
+          mobileSearchOpen
+            ? 'flex absolute top-12 right-0 w-[calc(100vw-2rem)] max-w-xs z-50 shadow-2xl bg-slate-900'
+            : 'hidden sm:flex'
+        )}
+        style={{ background: 'rgba(15,23,42,0.92)', backdropFilter: 'blur(16px)' }}
+      >
         <Search className="w-4 h-4 text-slate-400 shrink-0" />
         <input
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           onFocus={() => { if (searchQuery.length >= 2) setShowSearchResults(true) }}
           placeholder="Search..."
-          className="w-24 sm:w-40 md:w-48 lg:w-56 bg-transparent text-sm text-slate-100 placeholder-slate-500 outline-none transition-all focus:w-36 sm:focus:w-52 md:focus:w-64"
+          className="w-full sm:w-36 md:w-44 lg:w-56 bg-transparent text-sm text-slate-100 placeholder-slate-500 outline-none transition-all sm:focus:w-48 md:focus:w-60"
         />
         {isSearching ? (
           <Loader2 className="w-3.5 h-3.5 text-slate-400 animate-spin" />
@@ -116,6 +136,7 @@ function SearchBar() {
                           navigate(item.link)
                           setShowSearchResults(false)
                           setSearchQuery('')
+                          setMobileSearchOpen(false)
                         }}
                         className="w-full text-left px-4 py-2 hover:bg-white/5 transition-colors flex flex-col"
                       >

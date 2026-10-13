@@ -118,33 +118,33 @@ export default function CalendarPage() {
 
             <div className="flex flex-col lg:flex-row gap-8 items-start">
                 {/* Calendar Grid */}
-                <div className="flex-1 w-full glass-card p-6 border border-rose-500/20 shadow-xl">
-                    <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-2xl font-bold text-white">{monthName}</h2>
-                        <div className="flex gap-2">
-                            <button onClick={prevMonth} className="p-2 rounded-lg bg-surface-800 hover:bg-surface-700 text-slate-300 transition-colors">
-                                <ChevronLeft className="w-5 h-5" />
+                <div className="flex-1 w-full bg-[#17132e] rounded-3xl p-3 sm:p-6 border border-[#2e2652] shadow-xl">
+                    <div className="flex items-center justify-between mb-4 sm:mb-8">
+                        <h2 className="text-xl sm:text-2xl font-bold text-white">{monthName}</h2>
+                        <div className="flex gap-1.5 sm:gap-2">
+                            <button onClick={prevMonth} className="p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">
+                                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                             </button>
-                            <button onClick={goToday} className="px-4 py-2 text-sm font-semibold rounded-lg bg-surface-800 hover:bg-surface-700 text-slate-300 transition-colors">
+                            <button onClick={goToday} className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">
                                 Today
                             </button>
-                            <button onClick={nextMonth} className="p-2 rounded-lg bg-surface-800 hover:bg-surface-700 text-slate-300 transition-colors">
-                                <ChevronRight className="w-5 h-5" />
+                            <button onClick={nextMonth} className="p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">
+                                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                             </button>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-7 gap-2 mb-2">
+                    <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2">
                         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                            <div key={day} className="text-center text-sm font-semibold text-slate-400 py-2">
+                            <div key={day} className="text-center text-xs sm:text-sm font-semibold text-[#a398c7] py-1 sm:py-2">
                                 {day}
                             </div>
                         ))}
                     </div>
 
-                    <div className="grid grid-cols-7 gap-2">
+                    <div className="grid grid-cols-7 gap-1 sm:gap-2">
                         {paddingDays.map(i => (
-                            <div key={`pad-${i}`} className="aspect-square rounded-xl bg-surface-900/30 border border-white/5 opacity-40" />
+                            <div key={`pad-${i}`} className="aspect-square rounded-lg sm:rounded-xl bg-white/[0.02] border border-white/5 opacity-40" />
                         ))}
                         
                         {days.map(date => {
@@ -157,18 +157,18 @@ export default function CalendarPage() {
                                 <button
                                     key={dateStr}
                                     onClick={() => setSelectedDate(date)}
-                                    className={`relative aspect-square rounded-xl flex flex-col items-center justify-center gap-1 transition-all duration-200 border ${
-                                        isSelected ? 'bg-rose-500/25 border-rose-400 shadow-glow-primary scale-105 z-10' :
-                                        hasData ? 'bg-surface-800/90 border-rose-500/30 hover:border-rose-500/60 hover:bg-surface-800' :
-                                        'bg-surface-900/50 border-white/5 hover:border-white/20'
+                                    className={`relative aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-200 border ${
+                                        isSelected ? 'bg-[#7c56ed]/30 border-[#a78bfa] shadow-[0_0_15px_rgba(124,86,237,0.5)] scale-105 z-10' :
+                                        hasData ? 'bg-[#221a42] border-[#7c56ed]/40 hover:border-[#7c56ed] hover:bg-[#281f4f]' :
+                                        'bg-white/[0.03] border-white/5 hover:border-white/20'
                                     }`}
                                 >
-                                    <span className={`text-sm font-medium ${isToday ? 'text-rose-400 font-bold' : isSelected ? 'text-white font-semibold' : 'text-slate-300'}`}>
+                                    <span className={`text-sm font-medium ${isToday ? 'text-[#a78bfa] font-bold' : isSelected ? 'text-white font-bold' : 'text-slate-300'}`}>
                                         {date.getDate()}
                                     </span>
                                     {hasData && (
                                         <div className="flex gap-1">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.9)]" />
+                                            <div className="w-1.5 h-1.5 rounded-full bg-[#7c56ed] shadow-[0_0_8px_rgba(124,86,237,0.9)]" />
                                         </div>
                                     )}
                                 </button>

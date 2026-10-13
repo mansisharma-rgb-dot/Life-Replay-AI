@@ -4,21 +4,28 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Sidebar from './Sidebar'
 import Topbar  from './Topbar'
 import MobileBottomNav from './MobileBottomNav'
-import MobileDrawer from './MobileDrawer'
+import MobileNavHub from './MobileNavHub'
 import GlobalBackground from './GlobalBackground'
+import { useCapacitorApp } from '../../hooks/useCapacitorApp'
 import clsx    from 'clsx'
 
 const SIDEBAR_COLLAPSED_KEY = 'lr-sidebar-collapsed'
 
 const PAGE_VARIANTS = {
-  initial:   { opacity: 0, y: 10 },
-  animate:   { opacity: 1, y: 0  },
+  initial:   { opacity: 0, y: 8 },
+  animate:   { opacity: 1, y: 0 },
   exit:      { opacity: 0, y: -6 },
 }
 
 export default function AppLayout() {
   const location = useLocation()
-  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
+  const [mobileHubOpen, setMobileHubOpen] = useState(false)
+
+  // Configure native Capacitor back button and system status bar
+  useCapacitorApp({
+    isModalOpen: mobileHubOpen,
+    closeModal: () => setMobileHubOpen(false),
+  })
 
   const [collapsed, setCollapsed] = useState(() => {
     try {
@@ -45,9 +52,9 @@ export default function AppLayout() {
     return () => mql.removeEventListener('change', handler)
   }, [])
 
-  // Auto-close mobile drawer on route change
+  // Auto-close mobile hub on route change
   useEffect(() => {
-    setMobileDrawerOpen(false)
+    setMobileHubOpen(false)
   }, [location.pathname])
 
   return (
@@ -59,10 +66,10 @@ export default function AppLayout() {
         <Sidebar collapsed={collapsed} onToggle={toggleSidebar} />
       </div>
 
-      {/* Mobile Drawer */}
-      <MobileDrawer
-        isOpen={mobileDrawerOpen}
-        onClose={() => setMobileDrawerOpen(false)}
+      {/* Mobile Nav Hub (Secondary destinations sheet) */}
+      <MobileNavHub
+        isOpen={mobileHubOpen}
+        onClose={() => setMobileHubOpen(false)}
       />
 
       {/* Main wrapper: 0 margin on phone (< md), 72/260px on desktop (>= md) */}
@@ -77,7 +84,7 @@ export default function AppLayout() {
         {/* Topbar */}
         <Topbar
           sidebarCollapsed={collapsed}
-          onOpenMobileDrawer={() => setMobileDrawerOpen(true)}
+          onOpenMobileDrawer={() => setMobileHubOpen(true)}
         />
 
         {/* Page content */}
@@ -89,8 +96,8 @@ export default function AppLayout() {
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="w-full px-3.5 sm:px-6 lg:px-6 py-4 sm:py-6 pb-28 md:pb-8 min-h-[calc(100vh-3.5rem)] max-w-7xl mx-auto"
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="w-full px-3.5 sm:px-6 lg:px-6 py-3.5 sm:py-6 pb-28 md:pb-8 min-h-[calc(100vh-3.5rem)] max-w-7xl mx-auto"
             >
               <Outlet />
             </motion.div>
@@ -99,7 +106,7 @@ export default function AppLayout() {
       </div>
 
       {/* Bottom Navigation (Mobile only) */}
-      <MobileBottomNav />
+      <MobileBottomNav onOpenHub={() => setMobileHubOpen(true)} />
     </div>
   )
 }

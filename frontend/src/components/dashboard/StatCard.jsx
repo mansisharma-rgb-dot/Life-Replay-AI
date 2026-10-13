@@ -64,7 +64,7 @@ export default function StatCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay, ease: 'easeOut' }}
       whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className="relative overflow-hidden rounded-2xl p-5 flex flex-col gap-3 cursor-default"
+      className="relative overflow-hidden rounded-2xl p-3.5 sm:p-5 flex flex-col gap-2.5 sm:gap-3 cursor-default"
       style={{
         background: 'rgba(9,14,26,0.55)',
         backdropFilter: 'blur(20px)',
@@ -74,35 +74,38 @@ export default function StatCard({
       }}
     >
       {/* Top row: title + icon */}
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">{title}</p>
-          <h3 className="text-3xl font-bold text-white tracking-tight leading-none mt-2">{value}</h3>
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <p className="text-[11px] sm:text-xs font-medium text-slate-400 uppercase tracking-wider truncate mb-0.5">{title}</p>
+          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mt-1 sm:mt-2 truncate">{value}</h3>
         </div>
 
         <div className={clsx(
-          'w-9 h-9 rounded-xl flex items-center justify-center border shrink-0',
+          'w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center border shrink-0',
           cfg.icon,
         )}>
-          <Icon className="w-4.5 h-4.5" />
+          <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
         </div>
       </div>
 
       {/* Bottom row: trend + sparkline */}
-      <div className="flex items-end justify-between mt-auto">
+      <div className="flex items-end justify-between mt-auto pt-1">
         {trend ? (
-          <div className={clsx('flex items-center gap-1 text-xs font-medium', trendColor)}>
-            {trend.direction === 'up'   && <TrendingUp   className="w-3.5 h-3.5" />}
-            {trend.direction === 'down' && <TrendingDown  className="w-3.5 h-3.5" />}
-            {trend.direction === 'neutral' && <Minus      className="w-3.5 h-3.5" />}
-            <span>{trend.direction === 'up' ? '+' : trend.direction === 'down' ? '-' : ''}{Math.abs(trend.value)}% </span>
-            <span className="text-slate-500 font-normal">{trend.label}</span>
+          <div className={clsx('flex items-center gap-1 text-[11px] sm:text-xs font-medium truncate', trendColor)}>
+            {trend.direction === 'up'   && <TrendingUp   className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />}
+            {trend.direction === 'down' && <TrendingDown  className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />}
+            {trend.direction === 'neutral' && <Minus      className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />}
+            <span>{trend.direction === 'up' ? '+' : trend.direction === 'down' ? '-' : ''}{Math.abs(trend.value)}%</span>
           </div>
         ) : (
           <div /> /* spacer */
         )}
 
-        {showSparkline && <Sparkline color={cfg.spark} />}
+        {showSparkline && (
+          <div className="hidden sm:block">
+            <Sparkline color={cfg.spark} />
+          </div>
+        )}
       </div>
     </motion.div>
   )

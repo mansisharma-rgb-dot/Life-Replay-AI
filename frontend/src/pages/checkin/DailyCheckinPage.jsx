@@ -147,12 +147,12 @@ export default function CheckinWizard() {
                 </AnimatePresence>
 
                 {currentStep < totalSteps && (
-                    <div className="flex justify-between items-center mt-8 sm:mt-12 pt-4 sm:pt-6 border-t border-white/10 gap-3">
+                    <div className="flex justify-between items-center mt-6 sm:mt-10 pt-4 border-t border-white/10 gap-3 pb-8 sm:pb-0">
                         <button 
                             onClick={prevStep}
                             disabled={currentStep === 1 || isSaving}
-                            className={`flex items-center gap-1.5 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-medium text-xs sm:text-sm transition-colors ${
-                                currentStep === 1 ? 'opacity-0 pointer-events-none' : 'hover:bg-white/10 text-gray-300 active:scale-95'
+                            className={`flex items-center gap-1.5 px-4 sm:px-6 py-3 rounded-xl font-semibold text-xs sm:text-sm min-h-[48px] touch-target tap-press transition-colors ${
+                                currentStep === 1 ? 'opacity-0 pointer-events-none' : 'bg-white/5 hover:bg-white/10 text-slate-300 active:scale-95 border border-white/10'
                             }`}
                         >
                             <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /> Back
@@ -161,9 +161,13 @@ export default function CheckinWizard() {
                         <button 
                             onClick={nextStep}
                             disabled={isSaving}
-                            className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)] active:scale-95 transition-all"
+                            className="flex-1 sm:flex-initial justify-center px-6 sm:px-8 py-3 rounded-full font-bold text-xs sm:text-sm min-h-[48px] flex items-center gap-2 text-white shadow-[0_4px_20px_rgba(108,82,212,0.4)] active:scale-95 touch-target tap-press transition-all"
+                            style={{
+                                background: 'linear-gradient(135deg, #6c52d4 0%, #7c56ed 50%, #8c62f5 100%)',
+                            }}
                         >
-                            <span>{currentStep === totalSteps - 1 ? 'Submit Check-in' : 'Continue'}</span> <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                            <span>{currentStep === totalSteps - 1 ? 'Submit Check-in ✨' : 'Continue'}</span>
+                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                     </div>
                 )}

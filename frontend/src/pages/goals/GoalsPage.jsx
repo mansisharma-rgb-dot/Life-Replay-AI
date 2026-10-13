@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit2, Trash2, CheckCircle, Target, Clock, AlertCircle, TrendingUp, Award, Flag } from 'lucide-react';
 import { goalsApi } from '../../api/goalsApi';
 import toast from 'react-hot-toast';
+import moodFocused from '../../assets/characters/mood_focused.jpg';
 
 export default function GoalsPage() {
   const [goals, setGoals] = useState([]);
@@ -129,13 +130,21 @@ export default function GoalsPage() {
     <div className="animate-fade-in-up space-y-6 pb-12">
       {/* ── Header ───────────────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Vision & Goals</h1>
-          <p className="text-slate-400 text-xs sm:text-sm mt-1">Set your sights high and track your journey.</p>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl overflow-hidden shrink-0 border border-emerald-400/30 shadow-[0_0_16px_rgba(52,211,153,0.3)]">
+            <img src={moodFocused} alt="Goal Champion" className="w-full h-full object-cover" />
+          </div>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Vision & Goals</h1>
+            <p className="text-slate-400 text-xs sm:text-sm mt-0.5">Set milestones and conquer your personal ambitions.</p>
+          </div>
         </div>
         <button 
           onClick={() => handleOpenModal()}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-cyan-600/80 hover:bg-cyan-600 text-white px-4 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(8,145,178,0.3)] hover:shadow-[0_0_20px_rgba(8,145,178,0.5)] border border-cyan-500/50 text-sm font-medium active:scale-95"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 text-white px-5 py-2.5 rounded-full transition-all text-sm font-semibold active:scale-95 shadow-[0_4px_20px_rgba(108,82,212,0.4)]"
+          style={{
+            background: 'linear-gradient(135deg, #6c52d4 0%, #7c56ed 50%, #8c62f5 100%)',
+          }}
         >
           <Plus size={16} />
           <span>New Goal</span>
@@ -143,55 +152,60 @@ export default function GoalsPage() {
       </div>
 
       {/* ── Top Stat Cards ───────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 mb-6 sm:mb-8">
-        <div className="glass-card p-5 flex items-center justify-between border-white/5">
+      <div className="grid grid-cols-3 gap-2.5 sm:gap-4 mb-4 sm:mb-8">
+        <div className="mobile-card p-3 sm:p-5 flex items-center justify-between border-white/5">
           <div>
-            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Total Goals</p>
-            <p className="text-3xl font-bold text-white">{goals.length}</p>
+            <p className="text-slate-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-0.5 truncate">Total</p>
+            <p className="text-xl sm:text-3xl font-bold text-white">{goals.length}</p>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
-            <Target size={24} />
+          <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20 shrink-0">
+            <Target className="w-4 h-4 sm:w-6 sm:h-6" />
           </div>
         </div>
         
-        <div className="glass-card p-5 flex items-center justify-between border-white/5">
+        <div className="mobile-card p-3 sm:p-5 flex items-center justify-between border-white/5">
           <div>
-            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">In Progress</p>
-            <p className="text-3xl font-bold text-white">{inProgressGoals}</p>
+            <p className="text-slate-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-0.5 truncate">Active</p>
+            <p className="text-xl sm:text-3xl font-bold text-white">{inProgressGoals}</p>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
-            <TrendingUp size={24} />
+          <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/20 shrink-0">
+            <TrendingUp className="w-4 h-4 sm:w-6 sm:h-6" />
           </div>
         </div>
 
-        <div className="glass-card p-5 flex items-center justify-between border-white/5">
+        <div className="mobile-card p-3 sm:p-5 flex items-center justify-between border-white/5">
           <div>
-            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Completed</p>
-            <p className="text-3xl font-bold text-white">{completedGoals}</p>
+            <p className="text-slate-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-0.5 truncate">Done</p>
+            <p className="text-xl sm:text-3xl font-bold text-white">{completedGoals}</p>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-            <Award size={24} />
+          <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 shrink-0">
+            <Award className="w-4 h-4 sm:w-6 sm:h-6" />
           </div>
         </div>
       </div>
 
       {/* ── Main Goals Grid ──────────────────────────────────────────────────── */}
       {goals.length === 0 ? (
-        <div className="glass-card p-12 text-center rounded-2xl border-white/5">
-          <div className="w-16 h-16 bg-cyan-500/10 border border-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Flag size={28} className="text-cyan-400" />
+        <div className="bg-[#17132e] border border-[#2e2652] p-8 sm:p-12 text-center rounded-3xl shadow-lg">
+          <div className="w-16 h-16 rounded-2xl overflow-hidden mx-auto mb-3.5 border border-emerald-400/30 shadow-[0_0_20px_rgba(52,211,153,0.3)]">
+            <img src={moodFocused} alt="Goal Companion" className="w-full h-full object-cover" />
           </div>
-          <h3 className="text-xl font-medium text-white mb-2">No goals yet</h3>
-          <p className="text-slate-400 mb-6 max-w-md mx-auto">Set long-term objectives and track your progress over time. A goal could be learning a new skill, saving money, or running a marathon.</p>
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5">No goals created yet</h3>
+          <p className="text-xs sm:text-sm text-[#a398c7] mb-5 max-w-md mx-auto leading-relaxed">
+            Set ambitious milestones and track your journey over time. Learn a skill, build fitness, or start a project.
+          </p>
           <button 
             onClick={() => handleOpenModal()}
-            className="text-cyan-400 font-medium hover:text-cyan-300 transition-colors"
+            className="px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-semibold shadow-md active:scale-95 transition-transform"
+            style={{
+              background: 'linear-gradient(135deg, #6c52d4 0%, #7c56ed 50%, #8c62f5 100%)',
+            }}
           >
-            Create your first goal
+            Create Your First Goal ✨
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5 sm:gap-6">
           <AnimatePresence>
             {goals.map(goal => {
               const progressPercent = Math.min(100, Math.round((goal.progress / goal.target) * 100)) || 0;
@@ -203,17 +217,17 @@ export default function GoalsPage() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className={`glass-card p-6 flex flex-col group relative overflow-hidden transition-all duration-300 ${isCompleted ? 'border-emerald-500/30' : 'border-white/5 hover:border-cyan-500/30'}`}
+                  className={`mobile-card p-4 sm:p-6 flex flex-col group relative overflow-hidden transition-all duration-300 ${isCompleted ? 'border-emerald-500/30' : 'border-white/5 hover:border-cyan-500/30'}`}
                 >
                   {/* Subtle Glow */}
                   <div className={`absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] transition-colors duration-700 pointer-events-none ${isCompleted ? 'bg-emerald-500/10' : 'bg-cyan-500/5 group-hover:bg-cyan-500/15'}`} />
                   
-                  <div className="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                      <h3 className={`text-lg font-bold ${isCompleted ? 'text-slate-300 line-through decoration-emerald-500/50' : 'text-white'}`}>
+                  <div className="flex justify-between items-start mb-3 sm:mb-4 relative z-10 gap-2">
+                    <div className="min-w-0 flex-1">
+                      <h3 className={`text-base sm:text-lg font-bold truncate ${isCompleted ? 'text-slate-300 line-through decoration-emerald-500/50' : 'text-white'}`}>
                         {goal.title}
                       </h3>
-                      <div className="flex items-center gap-3 mt-1.5">
+                      <div className="flex flex-wrap items-center gap-2 mt-1.5">
                         {goal.category && (
                           <span className="text-[10px] font-semibold uppercase tracking-wider text-cyan-300 bg-cyan-900/30 border border-cyan-500/20 px-2 py-0.5 rounded-md">
                             {goal.category}
@@ -228,12 +242,13 @@ export default function GoalsPage() {
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => handleOpenModal(goal)} className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                        <Edit2 size={14} />
+                    {/* Always visible on touch, hover on desktop */}
+                    <div className="flex items-center gap-1 shrink-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => handleOpenModal(goal)} className="p-2 sm:p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors touch-target tap-press" aria-label="Edit goal">
+                        <Edit2 size={15} />
                       </button>
-                      <button onClick={() => handleDelete(goal.id)} className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors">
-                        <Trash2 size={14} />
+                      <button onClick={() => handleDelete(goal.id)} className="p-2 sm:p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors touch-target tap-press" aria-label="Delete goal">
+                        <Trash2 size={15} />
                       </button>
                     </div>
                   </div>

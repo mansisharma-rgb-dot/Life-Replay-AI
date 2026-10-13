@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit2, CheckCircle2, Circle, Activity, History, AlertCircle, Calendar as CalendarIcon, Flame, Target, Check } from 'lucide-react';
+import { Plus, Edit2, CheckCircle2, Activity, History, AlertCircle, Calendar as CalendarIcon, Flame, Target, Check } from 'lucide-react';
 import { habitsApi } from '../../api/habitsApi';
 import toast from 'react-hot-toast';
+import moodHappy from '../../assets/characters/mood_happy.jpg';
 
 export default function HabitsPage() {
   const [habits, setHabits] = useState([]);
@@ -161,17 +162,22 @@ export default function HabitsPage() {
     <div className="animate-fade-in-up space-y-6 pb-12">
       {/* ── Header ───────────────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Habits</h1>
-          <p className="text-slate-400 text-xs sm:text-sm mt-1">Build consistency, one habit at a time.</p>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl overflow-hidden shrink-0 border border-yellow-400/30 shadow-[0_0_16px_rgba(250,204,21,0.3)]">
+            <img src={moodHappy} alt="Habit Mascot" className="w-full h-full object-cover" />
+          </div>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Habits</h1>
+            <p className="text-slate-400 text-xs sm:text-sm mt-0.5">Build consistency, one habit at a time.</p>
+          </div>
         </div>
         <div className="flex items-center gap-2.5 w-full sm:w-auto">
-          <button className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-colors">
-            <CalendarIcon size={18} />
-          </button>
           <button 
             onClick={() => handleOpenModal()}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-purple-600/80 hover:bg-purple-600 text-white px-4 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] border border-purple-500/50 text-sm font-medium active:scale-95"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 text-white px-5 py-2.5 rounded-full transition-all text-sm font-semibold active:scale-95 shadow-[0_4px_20px_rgba(108,82,212,0.4)]"
+            style={{
+              background: 'linear-gradient(135deg, #6c52d4 0%, #7c56ed 50%, #8c62f5 100%)',
+            }}
           >
             <Plus size={16} />
             <span>New Habit</span>
@@ -208,17 +214,22 @@ export default function HabitsPage() {
 
           <div className="space-y-3 pt-2">
             {habits.length === 0 ? (
-              <div className="glass-card p-12 text-center rounded-2xl border-white/5">
-                <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Activity size={28} className="text-purple-400" />
+              <div className="bg-[#17132e] border border-[#2e2652] p-8 sm:p-12 text-center rounded-3xl shadow-lg">
+                <div className="w-16 h-16 rounded-2xl overflow-hidden mx-auto mb-3.5 border border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.3)]">
+                  <img src={moodHappy} alt="Habit Mascot" className="w-full h-full object-cover" />
                 </div>
-                <h3 className="text-xl font-medium text-white mb-2">No habits yet</h3>
-                <p className="text-slate-400 mb-6 max-w-sm mx-auto">Start small. Track daily routines like drinking water, exercising, or meditating to build lasting positive change.</p>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5">No habits tracked yet</h3>
+                <p className="text-xs sm:text-sm text-[#a398c7] mb-5 max-w-sm mx-auto leading-relaxed">
+                  Start small. Track daily routines like drinking water, daily walks, or deep study to build lasting streaks.
+                </p>
                 <button 
                   onClick={() => handleOpenModal()}
-                  className="text-purple-400 font-medium hover:text-purple-300 transition-colors"
+                  className="px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-semibold shadow-md active:scale-95 transition-transform"
+                  style={{
+                    background: 'linear-gradient(135deg, #6c52d4 0%, #7c56ed 50%, #8c62f5 100%)',
+                  }}
                 >
-                  Create your first habit
+                  Create Your First Habit ✨
                 </button>
               </div>
             ) : (
@@ -228,46 +239,51 @@ export default function HabitsPage() {
                     key={habit.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`glass-card p-4 flex items-center gap-4 transition-all duration-300 ${
-                      habit.isCompletedToday ? 'border-purple-500/30 bg-purple-900/10' : 'border-white/5 hover:border-white/20'
+                    className={`mobile-card p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-4 transition-all duration-300 ${
+                      habit.isCompletedToday ? 'border-violet-500/30 bg-violet-900/10' : 'border-white/5 hover:border-white/20'
                     }`}
                   >
+                    {/* Left: 48px Touch Toggle */}
                     <button 
                       onClick={() => toggleCompletion(habit)}
-                      className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
-                        habit.isCompletedToday 
-                          ? 'bg-purple-500 text-white shadow-[0_0_10px_rgba(168,85,247,0.5)]' 
-                          : 'border-2 border-slate-500 text-transparent hover:border-purple-400'
-                      }`}
+                      className="w-11 h-11 flex items-center justify-center shrink-0 touch-target tap-press"
+                      aria-label={habit.isCompletedToday ? `Mark ${habit.name} incomplete` : `Mark ${habit.name} complete`}
                     >
-                      <Check size={14} className={habit.isCompletedToday ? 'opacity-100' : 'opacity-0'} />
+                      <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all ${
+                        habit.isCompletedToday 
+                          ? 'bg-gradient-to-tr from-violet-600 to-indigo-500 text-white shadow-[0_0_12px_rgba(139,92,246,0.5)]' 
+                          : 'border-2 border-slate-500 hover:border-violet-400 bg-white/5'
+                      }`}>
+                        <Check size={16} className={habit.isCompletedToday ? 'opacity-100' : 'opacity-0'} />
+                      </div>
                     </button>
                     
-                    <div className="flex-shrink-0 w-10 h-10 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center text-xl">
+                    {/* Icon */}
+                    <div className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center text-lg sm:text-xl">
                       {habit.icon}
                     </div>
 
-                    <div className="flex-grow">
-                      <h3 className={`font-medium ${habit.isCompletedToday ? 'text-slate-300 line-through decoration-purple-500/50' : 'text-white'}`}>
+                    {/* Title & Frequency */}
+                    <div className="flex-1 min-w-0 pr-1">
+                      <h3 className={`text-sm sm:text-base font-semibold truncate ${habit.isCompletedToday ? 'text-slate-300 line-through decoration-violet-500/50' : 'text-white'}`}>
                         {habit.name}
                       </h3>
-                      <p className="text-xs text-slate-400 capitalize">{habit.frequency} · Personal Growth</p>
+                      <p className="text-[11px] text-slate-400 capitalize truncate">{habit.frequency} streak</p>
                     </div>
 
-                    <div className="flex flex-col items-end gap-1">
-                      <div className="flex items-center gap-1.5 text-sm font-medium">
-                        <Flame size={14} className={habit.current_streak > 0 ? "text-orange-400" : "text-slate-600"} />
-                        <span className={habit.current_streak > 0 ? "text-white" : "text-slate-500"}>{habit.current_streak}</span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wider">Day Streak</p>
+                    {/* Streak Badge */}
+                    <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/[0.04] border border-white/5 shrink-0">
+                      <Flame size={14} className={habit.current_streak > 0 ? "text-amber-400" : "text-slate-600"} />
+                      <span className={`text-xs font-bold ${habit.current_streak > 0 ? "text-amber-300" : "text-slate-500"}`}>{habit.current_streak}</span>
                     </div>
 
-                    <div className="flex items-center gap-1 ml-4 border-l border-white/10 pl-4">
-                      <button onClick={() => handleOpenHistory(habit)} className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                        <History size={14} />
+                    {/* Actions: Edit & History */}
+                    <div className="flex items-center gap-0.5 shrink-0">
+                      <button onClick={() => handleOpenHistory(habit)} className="p-2 text-slate-400 hover:text-white rounded-lg transition-colors touch-target tap-press" aria-label="Habit history">
+                        <History size={15} />
                       </button>
-                      <button onClick={() => handleOpenModal(habit)} className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                        <Edit2 size={14} />
+                      <button onClick={() => handleOpenModal(habit)} className="p-2 text-slate-400 hover:text-white rounded-lg transition-colors touch-target tap-press" aria-label="Edit habit">
+                        <Edit2 size={15} />
                       </button>
                     </div>
                   </motion.div>

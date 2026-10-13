@@ -1,41 +1,42 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-const QUOTES = [
-    "Small daily improvements are the key to staggering long-term results.",
-    "What you do today can improve all your tomorrows.",
-    "Consistency is what transforms average into excellence.",
-    "Growth is never by mere chance; it is the result of forces working together.",
-    "Success is the sum of small efforts, repeated day in and day out."
-];
+import React from 'react'
+import { motion } from 'framer-motion'
+
+const STEP_LABELS = {
+  1: 'Activities & Habits',
+  2: 'Mood & Energy',
+  3: 'Goals & Focus',
+  4: 'Reflection & Notes',
+  5: 'Review & Submit',
+}
 
 const ProgressIndicator = React.memo(({ currentStep, totalSteps }) => {
-    const progress = (currentStep / totalSteps) * 100;
-    
-    // Select quote based on day of year so it's consistent for the session
-    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-    const quote = QUOTES[dayOfYear % QUOTES.length];
-    
-    return (
-        <div className="z-20 mb-6 w-full">
-            <div className="glass-card p-5 border-white/10">
-                <div className="flex justify-between text-sm text-gray-400 mb-2 font-medium">
-                    <span>Step {currentStep} of {totalSteps}</span>
-                    <span>{Math.round(progress)}% Complete</span>
-                </div>
-                <div className="h-2 w-full bg-surface-800 rounded-full overflow-hidden">
-                    <motion.div 
-                        className="h-full bg-gradient-brand shadow-glow-primary rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${progress}%` }}
-                        transition={{ ease: "easeInOut", duration: 0.3 }}
-                    />
-                </div>
-                <div className="mt-4 text-center">
-                    <p className="text-xs text-amber-500/80 italic font-serif">"{quote}"</p>
-                </div>
-            </div>
-        </div>
-    );
-});
+  const progress = (currentStep / totalSteps) * 100
+  const stepName = STEP_LABELS[currentStep] || `Step ${currentStep}`
 
-export default ProgressIndicator;
+  return (
+    <div className="z-10 mb-4 sm:mb-6 w-full">
+      <div className="mobile-card p-3.5 sm:p-4 border-white/10">
+        <div className="flex items-center justify-between text-xs sm:text-sm font-semibold mb-2">
+          <div className="flex items-center gap-2">
+            <span className="w-5 h-5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30 text-[11px] flex items-center justify-center font-bold">
+              {currentStep}
+            </span>
+            <span className="text-white tracking-tight">{stepName}</span>
+          </div>
+          <span className="text-violet-400 font-bold">{Math.round(progress)}%</span>
+        </div>
+
+        <div className="h-2 w-full bg-surface-900 rounded-full overflow-hidden p-0.5 border border-white/5">
+          <motion.div
+            className="h-full bg-gradient-to-r from-violet-600 via-indigo-500 to-amber-400 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ ease: 'easeOut', duration: 0.3 }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+})
+
+export default ProgressIndicator

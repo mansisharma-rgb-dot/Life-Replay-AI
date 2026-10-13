@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
+import gratitudeReadingImg from '../../../assets/characters/gratitude_reading.jpg';
 
 const ReflectionStep = React.memo(({ data, updateJournal }) => {
     const journal = data.journal || {};
@@ -10,20 +11,25 @@ const ReflectionStep = React.memo(({ data, updateJournal }) => {
             initial={{ opacity: 0, y: 10 }} 
             animate={{ opacity: 1, y: 0 }} 
             exit={{ opacity: 0, y: -10 }}
-            className="space-y-6"
+            className="space-y-4"
         >
-            <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-white tracking-tight">Daily Reflection</h2>
-                <p className="text-gray-400 mt-2">Take a moment to reflect on your day.</p>
+            <div className="bg-[#17132e] border border-[#2e2652] rounded-3xl p-4 sm:p-5 flex items-center gap-4 shadow-lg">
+                <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl overflow-hidden shrink-0 border border-purple-400/30 shadow-[0_0_20px_rgba(124,86,237,0.3)]">
+                    <img src={gratitudeReadingImg} alt="Daily Reflection" className="w-full h-full object-cover" />
+                </div>
+                <div>
+                    <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">Daily Reflection</h2>
+                    <p className="text-xs text-[#a398c7] mt-0.5">Take a quiet moment to write your thoughts and gratitude.</p>
+                </div>
             </div>
 
-            <div className="glass-card p-6 space-y-6">
+            <div className="bg-[#17132e] border border-[#2e2652] rounded-3xl p-5 sm:p-6 space-y-5 shadow-lg">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <BookOpen className="w-6 h-6 text-emerald-400" />
-                        <h3 className="text-xl font-semibold text-white">Journal</h3>
+                    <div className="flex items-center gap-2.5">
+                        <BookOpen className="w-5 h-5 text-[#a78bfa]" />
+                        <h3 className="text-base font-bold text-white">Journal Entry</h3>
                     </div>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-[#a398c7]">
                         {(journal.content || '').trim().split(/\s+/).filter(x => x).length} words
                     </span>
                 </div>

@@ -147,12 +147,13 @@ export default function SkillsPage() {
                             layout
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="glass-card p-6 group relative overflow-hidden"
+                            className="glass-card p-4 sm:p-6 group relative overflow-hidden"
                         >
-                            <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                            <div className="absolute top-2 right-2 sm:top-0 sm:right-0 p-2 sm:p-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex gap-2">
                                 <button 
                                     onClick={() => deleteMutation.mutate(skill.id)}
-                                    className="p-1.5 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/40 transition-colors"
+                                    aria-label="Delete skill"
+                                    className="p-2 sm:p-1.5 rounded-xl sm:rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/40 transition-colors"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </button>

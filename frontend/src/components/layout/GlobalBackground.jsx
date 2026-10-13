@@ -47,20 +47,26 @@ export default function GlobalBackground() {
   }, [location.pathname])
 
   return (
-    <div className="fixed inset-0 z-[-5] pointer-events-none overflow-hidden bg-[#0a0a0f]">
+    <div className="fixed inset-0 z-[-5] pointer-events-none overflow-hidden bg-[#0c0a1a]">
       {/* 
-        CRITICAL: The cinematic background image requested by the user. 
-        It covers the entire viewport and remains fixed.
-        We use AnimatePresence for smooth crossfades between pages.
+        Reference Ambiance: Deep midnight purple/indigo canvas with soft celestial glow at top-right
       */}
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{
+          background: 'radial-gradient(circle at 85% 10%, rgba(139, 92, 246, 0.22) 0%, rgba(20, 16, 45, 0.4) 45%, transparent 70%), radial-gradient(circle at 10% 80%, rgba(99, 102, 241, 0.12) 0%, transparent 50%), #0c0a1a',
+        }}
+      />
+
+      {/* Subtle dynamic background crossfade */}
       <AnimatePresence mode="wait">
         <motion.div 
           key={currentBackground}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: 0.18 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full mix-blend-overlay"
           style={{
             backgroundImage: `url('${currentBackground}')`,
             backgroundSize: 'cover',
@@ -70,25 +76,12 @@ export default function GlobalBackground() {
         />
       </AnimatePresence>
 
-      {/* 
-        Dark translucent overlay to ensure text and cards remain readable.
-        This creates the premium, slightly dimmed atmosphere without hiding the image.
-      */}
-      <div className="absolute inset-0 bg-surface-950/40" />
-      
-      {/* 
-        Subtle gradient to help with sidebar and topbar contrast, 
-        but very gentle so the image stays visible.
-      */}
-      <div className="absolute inset-0 bg-gradient-to-r from-surface-950/70 via-surface-950/20 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-b from-surface-950/60 via-transparent to-surface-950/40" />
+      {/* Subtle ambient lighting matching Image 1 & 2 */}
+      <div className="absolute -top-16 -right-16 w-80 h-80 rounded-full blur-[100px] pointer-events-none"
+        style={{ background: 'rgba(167, 139, 250, 0.15)' }} />
 
-      {/* Very subtle ambient lighting to enhance the premium feel, but not overpower the image */}
-      <div className="absolute top-0 right-[10%] w-[40%] h-[50%] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: 'rgba(251, 146, 60, 0.05)' }} />
-
-      <div className="absolute bottom-[10%] left-[10%] w-[40%] h-[50%] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: 'rgba(139, 92, 246, 0.08)' }} />
+      <div className="absolute bottom-10 left-0 w-72 h-72 rounded-full blur-[110px] pointer-events-none"
+        style={{ background: 'rgba(108, 82, 212, 0.12)' }} />
     </div>
   )
 }

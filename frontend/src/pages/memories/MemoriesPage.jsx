@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
+import gratitudeReadingImg from '../../assets/characters/gratitude_reading.jpg';
 
 export default function MemoriesPage() {
     const [documents, setDocuments] = useState([]);
@@ -121,17 +122,17 @@ export default function MemoriesPage() {
             {/* Header */}
             <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 pt-2">
                 <div>
-                    <h1 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-primary-400 via-indigo-300 to-indigo-400 bg-clip-text text-transparent tracking-tight">
+                    <h1 className="text-2xl sm:text-4xl font-extrabold bg-gradient-to-r from-primary-400 via-indigo-300 to-indigo-400 bg-clip-text text-transparent tracking-tight">
                         Life Memories & Knowledge
                     </h1>
-                    <p className="text-slate-400 mt-2 text-sm sm:text-base">
+                    <p className="text-slate-400 mt-1 sm:mt-2 text-xs sm:text-base">
                         Upload your PDFs and documents. We automatically extract content and create structured summaries.
                     </p>
                 </div>
 
                 {documents.length > 0 && (
                     <div className="flex items-center gap-3">
-                        <div className="px-4 py-2 rounded-2xl bg-surface-800/80 border border-white/5 flex items-center gap-2.5 text-xs text-slate-300">
+                        <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl bg-surface-800/80 border border-white/5 flex items-center gap-2 text-xs text-slate-300">
                             <Database className="w-4 h-4 text-cyan-400" />
                             <span><strong>{documents.length}</strong> Memories ({totalExtractedChars.toLocaleString()} chars)</span>
                         </div>
@@ -139,11 +140,11 @@ export default function MemoriesPage() {
                 )}
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
                 {/* Upload Section */}
                 <div className="lg:col-span-1 space-y-4">
                     <div 
-                        className={`glass-card p-7 flex flex-col items-center justify-center text-center border-2 border-dashed transition-all cursor-pointer group
+                        className={`glass-card p-5 sm:p-7 flex flex-col items-center justify-center text-center border-2 border-dashed transition-all cursor-pointer group
                             ${isUploading ? 'border-primary-500 bg-primary-900/15' : 'border-surface-600/80 hover:border-primary-500 hover:bg-surface-800/60'}`}
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={handleDrop}
@@ -260,19 +261,22 @@ export default function MemoriesPage() {
                             <p className="text-slate-400 text-sm font-medium">Loading your memories...</p>
                         </div>
                     ) : documents.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center text-center py-20 bg-surface-900/40 rounded-3xl border border-dashed border-surface-700/80 p-8">
-                            <div className="w-16 h-16 bg-surface-800 rounded-2xl flex items-center justify-center mb-4 text-slate-400 border border-white/5 shadow-inner">
-                                <BookOpen className="w-8 h-8" />
+                        <div className="flex flex-col items-center justify-center text-center py-12 bg-[#17132e] rounded-3xl border border-[#2e2652] p-8 shadow-lg">
+                            <div className="w-24 h-24 rounded-2xl overflow-hidden mb-4 border border-[#7c56ed]/40 shadow-[0_0_24px_rgba(124,86,237,0.3)]">
+                                <img src={gratitudeReadingImg} alt="Memories Illustration" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-1.5">No memories yet</h3>
-                            <p className="text-slate-400 max-w-sm mx-auto text-xs sm:text-sm leading-relaxed mb-5">
-                                Upload journal entries, notes, or project PDFs to start building your personal searchable memory database.
+                            <h3 className="text-xl font-bold text-white mb-1.5">No memories uploaded yet</h3>
+                            <p className="text-[#a398c7] max-w-sm mx-auto text-xs sm:text-sm leading-relaxed mb-6">
+                                Upload journal entries, notes, or project documents to start building your personal searchable memory story.
                             </p>
                             <button
                                 onClick={() => fileInputRef.current?.click()}
-                                className="btn-primary text-xs sm:text-sm px-5 py-2.5"
+                                className="px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-semibold shadow-md active:scale-95 transition-transform"
+                                style={{
+                                    background: 'linear-gradient(135deg, #6c52d4 0%, #7c56ed 50%, #8c62f5 100%)',
+                                }}
                             >
-                                Upload Your First Document
+                                Upload Your First Document ✨
                             </button>
                         </div>
                     ) : filteredDocs.length === 0 ? (

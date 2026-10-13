@@ -23,18 +23,18 @@ const formatDateStr = (dateStr) => {
 
 // ─── Stat Card Component ───────────────────────────────────────────────────────
 const StatCard = ({ title, value, icon: Icon, colorClass, gradientClass }) => (
-  <div className={`glass-card p-6 rounded-2xl border border-surface-700 relative overflow-hidden group`}>
-    <div className={`absolute -right-4 -top-4 w-24 h-24 rounded-full blur-2xl opacity-20 transition-opacity group-hover:opacity-30 ${gradientClass}`} />
+  <div className={`glass-card p-3.5 sm:p-6 rounded-2xl border border-surface-700 relative overflow-hidden group`}>
+    <div className={`absolute -right-4 -top-4 w-20 sm:w-24 h-20 sm:h-24 rounded-full blur-2xl opacity-20 transition-opacity group-hover:opacity-30 ${gradientClass}`} />
     
-    <div className="flex items-start justify-between relative z-10">
+    <div className="flex items-start justify-between relative z-10 gap-2">
       <div>
-        <p className="text-slate-400 text-sm font-medium tracking-wide uppercase mb-1">{title}</p>
-        <div className="flex items-baseline gap-2">
-          <span className="text-3xl font-black text-white tracking-tight">{value}</span>
+        <p className="text-slate-400 text-xs sm:text-sm font-medium tracking-wide uppercase mb-1 line-clamp-1">{title}</p>
+        <div className="flex items-baseline gap-1 sm:gap-2">
+          <span className="text-xl sm:text-3xl font-black text-white tracking-tight">{value}</span>
         </div>
       </div>
-      <div className={`p-3 rounded-xl bg-surface-800/50 border border-surface-700 ${colorClass}`}>
-        <Icon className="w-6 h-6" strokeWidth={2.5} />
+      <div className={`p-2 sm:p-3 rounded-xl bg-surface-800/50 border border-surface-700 shrink-0 ${colorClass}`}>
+        <Icon className="w-4 h-4 sm:w-6 sm:h-6" strokeWidth={2.5} />
       </div>
     </div>
   </div>
@@ -143,7 +143,7 @@ export default function TimeAnalysisPage() {
           )}
 
           {/* ─── Summary Cards ─────────────────────────────────────────────────── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             <StatCard 
               title="Productivity Score" 
               value={`${data.summary.averageProductivityScore}/100`} 

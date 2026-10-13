@@ -5,6 +5,7 @@ import { SourceBadge } from '../../components/ui/SourceBadge';
 import { aiApi } from '@api/aiApi';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
+import aiHelperImg from '../../assets/characters/ai_helper.jpg';
 
 const ReplayLoader = () => {
   return (
@@ -177,46 +178,47 @@ export default function ReplayPage() {
   const comparisonStats = data?.context?.comparison_stats;
 
   return (
-    <div className="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 space-y-10 pb-32">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 lg:p-8 space-y-6 sm:space-y-10 pb-28">
       
       {/* ─── Header ────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col items-center text-center animate-fade-in relative z-10 space-y-4 pt-10">
-        <div className="w-16 h-16 bg-primary-900/30 rounded-2xl flex items-center justify-center shadow-glow-primary border border-primary-500/20">
-          <BrainCircuit className="w-8 h-8 text-primary-400" />
+      <div className="flex flex-col items-center text-center animate-fade-in relative z-10 space-y-3 pt-2 sm:pt-6">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-purple-400/40 shadow-[0_0_24px_rgba(124,86,237,0.45)]">
+          <img src={aiHelperImg} alt="AI Replay Companion" className="w-full h-full object-cover" />
         </div>
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
             AI Life Replay
           </h1>
-          <p className="text-slate-400 mt-3 text-lg max-w-xl mx-auto">
-            Search your memories. Revisit your journey.
+          <p className="text-[#a398c7] mt-1.5 sm:mt-2 text-xs sm:text-base max-w-xl mx-auto">
+            Search your memories. Revisit your journey with your AI companion.
           </p>
         </div>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="w-full max-w-2xl mt-8 relative">
+        <form onSubmit={handleSearch} className="w-full max-w-2xl mt-4 sm:mt-6 relative">
           <input 
             type="text" 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="What do you want to remember?"
-            className="w-full bg-surface-900/80 border border-surface-600 rounded-2xl py-4 pl-6 pr-14 text-white text-lg focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all placeholder-slate-500 shadow-xl"
+            className="w-full bg-[#17132e] border border-[#2e2652] rounded-2xl py-3.5 pl-4 sm:pl-6 pr-14 text-white text-sm sm:text-base focus:border-[#7c56ed] focus:ring-1 focus:ring-[#7c56ed] transition-all placeholder-slate-400 shadow-xl"
             disabled={loading}
           />
           <button 
             type="submit"
             disabled={loading || !query.trim()}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-primary-600 hover:bg-primary-500 disabled:bg-surface-700 text-white rounded-xl transition-colors"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2.5 bg-gradient-to-tr from-[#6c52d4] to-[#8c62f5] disabled:opacity-40 text-white rounded-xl transition-all shadow-md active:scale-95 touch-target tap-press"
+            aria-label="Search memories"
           >
-            <Send className="w-5 h-5" />
+            <Send className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </form>
         
         {!hasSearched && (
-          <div className="flex flex-wrap justify-center gap-2 mt-4 opacity-80">
-            <button onClick={() => setQuery("What was I focused on last month?")} className="px-3 py-1.5 text-xs bg-surface-800 text-slate-300 rounded-full hover:bg-surface-700 transition-colors">"What was I focused on last month?"</button>
-            <button onClick={() => setQuery("What happened during July?")} className="px-3 py-1.5 text-xs bg-surface-800 text-slate-300 rounded-full hover:bg-surface-700 transition-colors">"What happened during July?"</button>
-            <button onClick={() => setQuery("What goals was I working toward?")} className="px-3 py-1.5 text-xs bg-surface-800 text-slate-300 rounded-full hover:bg-surface-700 transition-colors">"What goals was I working toward?"</button>
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mt-3 opacity-90">
+            <button onClick={() => setQuery("What was I focused on last month?")} className="px-3 py-1.5 text-[11px] sm:text-xs bg-surface-800 text-slate-300 rounded-full hover:bg-surface-700 active:scale-95 transition-all">"What was I focused on last month?"</button>
+            <button onClick={() => setQuery("What happened during July?")} className="px-3 py-1.5 text-[11px] sm:text-xs bg-surface-800 text-slate-300 rounded-full hover:bg-surface-700 active:scale-95 transition-all">"What happened during July?"</button>
+            <button onClick={() => setQuery("What goals was I working toward?")} className="px-3 py-1.5 text-[11px] sm:text-xs bg-surface-800 text-slate-300 rounded-full hover:bg-surface-700 active:scale-95 transition-all">"What goals was I working toward?"</button>
           </div>
         )}
       </div>

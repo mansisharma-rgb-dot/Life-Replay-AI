@@ -28,7 +28,7 @@ export default function GithubHeatmap({ history }) {
     };
 
     return (
-        <div className="glass-card p-6 overflow-x-auto">
+        <div className="glass-card p-4 sm:p-6 overflow-x-auto">
             <h3 className="text-lg font-semibold text-white mb-4">Yearly Growth Heatmap</h3>
             <div className="flex gap-1 min-w-max">
                 {/* Generate columns (weeks) */}

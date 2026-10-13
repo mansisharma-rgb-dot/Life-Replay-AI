@@ -29,7 +29,7 @@ export default function GamificationCard({ delay = 0 }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay, ease: 'easeOut' }}
       whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className="relative overflow-hidden rounded-2xl p-5 flex flex-col gap-3 group"
+      className="relative overflow-hidden rounded-2xl p-3.5 sm:p-5 flex flex-col gap-2.5 sm:gap-3 group"
       style={{
         background: 'rgba(9,14,26,0.55)',
         backdropFilter: 'blur(20px)',
@@ -41,17 +41,17 @@ export default function GamificationCard({ delay = 0 }) {
       <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-transparent pointer-events-none" />
 
       {/* Top row */}
-      <div className="flex items-start justify-between relative z-10">
-        <div className="flex-1">
-          <p className="text-xs font-bold text-violet-400 uppercase tracking-wider mb-1">Level {profile.level}</p>
-          <div className="flex items-end gap-2 mt-1">
-            <h3 className="text-2xl font-bold text-white tracking-tight leading-none">{profile.total_xp.toLocaleString()}</h3>
-            <span className="text-sm text-slate-400 font-medium mb-0.5">XP</span>
+      <div className="flex items-start justify-between relative z-10 gap-2">
+        <div className="flex-1 min-w-0">
+          <p className="text-[11px] sm:text-xs font-bold text-violet-400 uppercase tracking-wider mb-0.5 truncate">Level {profile.level}</p>
+          <div className="flex items-end gap-1.5 mt-0.5 sm:mt-1">
+            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-none truncate">{profile.total_xp.toLocaleString()}</h3>
+            <span className="text-xs sm:text-sm text-slate-400 font-medium mb-0.5">XP</span>
           </div>
         </div>
         
-        <Link to="/progress" className="w-10 h-10 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center shrink-0 hover:bg-violet-500/20 transition-colors">
-          <ChevronRight className="w-5 h-5 text-violet-400 group-hover:translate-x-0.5 transition-transform" />
+        <Link to="/progress" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center shrink-0 hover:bg-violet-500/20 active:scale-95 transition-all" aria-label="View Progress">
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-violet-400 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
 
