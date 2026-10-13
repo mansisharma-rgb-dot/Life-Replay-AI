@@ -6,6 +6,7 @@ from sqlalchemy import func
 class TimeAnalysisService:
     @staticmethod
     def _get_user_today(user_id):
+        user_id = int(user_id)
         user = db.session.get(User, user_id)
         if user and user.timezone and user.timezone != 'UTC':
             try:
@@ -39,6 +40,7 @@ class TimeAnalysisService:
 
     @staticmethod
     def analyze(user_id, days=30):
+        user_id = int(user_id)
         today = TimeAnalysisService._get_user_today(user_id)
         cutoff = today - timedelta(days=days - 1)
         

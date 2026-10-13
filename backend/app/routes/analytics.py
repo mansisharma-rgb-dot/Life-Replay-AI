@@ -17,71 +17,81 @@ def get_days_from_range(time_range):
 @analytics_bp.route('/overview', methods=['GET'])
 @jwt_required()
 def get_overview():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
-    response_data, status_code = AnalyticsService.get_overview(get_jwt_identity(), days)
+    response_data, status_code = AnalyticsService.get_overview(user_id, days)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/life-score', methods=['GET'])
 @jwt_required()
 def get_life_score():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
-    response_data, status_code = AnalyticsService.get_life_score_analytics(get_jwt_identity(), days)
+    response_data, status_code = AnalyticsService.get_life_score_analytics(user_id, days)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/mood', methods=['GET'])
 @jwt_required()
 def get_mood():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
-    response_data, status_code = AnalyticsService.get_mood_analytics(get_jwt_identity(), days)
+    response_data, status_code = AnalyticsService.get_mood_analytics(user_id, days)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/habits', methods=['GET'])
 @jwt_required()
 def get_habits():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
-    response_data, status_code = AnalyticsService.get_habit_analytics(get_jwt_identity(), days)
+    response_data, status_code = AnalyticsService.get_habit_analytics(user_id, days)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/productivity', methods=['GET'])
 @jwt_required()
 def get_productivity():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
-    response_data, status_code = AnalyticsService.get_productivity_analytics(get_jwt_identity(), days)
+    response_data, status_code = AnalyticsService.get_productivity_analytics(user_id, days)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/sleep', methods=['GET'])
 @jwt_required()
 def get_sleep():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
-    response_data, status_code = AnalyticsService.get_sleep_analytics(get_jwt_identity(), days)
+    response_data, status_code = AnalyticsService.get_sleep_analytics(user_id, days)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/water', methods=['GET'])
 @jwt_required()
 def get_water():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
-    response_data, status_code = AnalyticsService.get_water_analytics(get_jwt_identity(), days)
+    response_data, status_code = AnalyticsService.get_water_analytics(user_id, days)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/goals', methods=['GET'])
 @jwt_required()
 def get_goals():
-    response_data, status_code = AnalyticsService.get_goal_progress(get_jwt_identity())
+    user_id = int(get_jwt_identity())
+    response_data, status_code = AnalyticsService.get_goal_progress(user_id)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/achievements', methods=['GET'])
 @jwt_required()
 def get_achievements():
-    response_data, status_code = AnalyticsService.get_achievements(get_jwt_identity())
+    user_id = int(get_jwt_identity())
+    response_data, status_code = AnalyticsService.get_achievements(user_id)
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/correlations', methods=['GET'])
 @jwt_required()
 def get_correlations():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
     include_ai = request.args.get('ai', 'false').lower() == 'true'
     
-    correlations = CorrelationService.get_correlations(get_jwt_identity(), days)
+    correlations = CorrelationService.get_correlations(user_id, days)
     
     response = {
         "correlations": correlations
@@ -96,10 +106,11 @@ def get_correlations():
 @analytics_bp.route('/time-analysis', methods=['GET'])
 @jwt_required()
 def get_time_analysis():
+    user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
     include_ai = request.args.get('ai', 'false').lower() == 'true'
     
-    analysis = TimeAnalysisService.analyze(get_jwt_identity(), days)
+    analysis = TimeAnalysisService.analyze(user_id, days)
     
     if include_ai and analysis.get('daily'):
         analysis["ai_insight"] = LLMService.interpret_time_analysis(analysis)

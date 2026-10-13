@@ -12,7 +12,7 @@ export default function OverviewCards({ data }) {
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
       <StatCard
         title="Average Life Score"
-        value={data.averageLifeScore}
+        value={data.averageLifeScore ?? 0}
         icon={Heart}
         trend={data.trends?.lifeScore}
         color="rose"
@@ -20,7 +20,7 @@ export default function OverviewCards({ data }) {
       />
       <StatCard
         title="Current Streak"
-        value={`${data.currentStreak} Days`}
+        value={`${data.currentStreak ?? 0} Days`}
         icon={Zap}
         trend={data.trends?.streak}
         color="amber"
@@ -28,7 +28,7 @@ export default function OverviewCards({ data }) {
       />
       <StatCard
         title="Total XP"
-        value={data.totalXp.toLocaleString()}
+        value={(data.totalXp ?? 0).toLocaleString()}
         icon={Star}
         trend={data.trends?.xp}
         color="primary"
@@ -36,7 +36,7 @@ export default function OverviewCards({ data }) {
       />
       <StatCard
         title="Average Mood"
-        value={`${data.averageMood} / 10`}
+        value={`${data.averageMood ?? 0} / 10`}
         icon={Activity}
         trend={data.trends?.mood}
         color="emerald"
@@ -44,14 +44,14 @@ export default function OverviewCards({ data }) {
       />
       <StatCard
         title="Completion Rate"
-        value={`${data.completionRate}%`}
+        value={`${data.completionRate ?? 0}%`}
         icon={CheckCircle}
         color="emerald"
         delay={0.5}
       />
       <StatCard
         title="Deep Work (Avg)"
-        value={`${Math.round(data.totalStudyHours / 7)} hrs/wk`}
+        value={`${Math.round((data.totalStudyHours ?? 0) / 7)} hrs/wk`}
         icon={BookOpen}
         trend={data.trends?.productivity}
         color="violet"
@@ -59,14 +59,14 @@ export default function OverviewCards({ data }) {
       />
       <StatCard
         title="Avg Sleep"
-        value={`${data.averageSleep} hrs`}
+        value={`${data.averageSleep ?? 0} hrs`}
         icon={Moon}
         color="primary"
         delay={0.7}
       />
       <StatCard
         title="Water Intake"
-        value={`${data.averageWaterIntake}L`}
+        value={`${data.averageWaterIntake ?? 0}L`}
         icon={Droplet}
         color="primary"
         delay={0.8}

@@ -31,7 +31,7 @@ export default function HabitAnalytics({ data }) {
         <div className="space-y-3 mt-2 overflow-y-auto pr-2 custom-scrollbar flex-1">
           <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Habit Completion</h4>
           
-          {data.habits.map((habit, idx) => (
+          {(data.habits || []).map((habit, idx) => (
             <div key={idx} className="flex flex-col gap-1.5">
               <div className="flex justify-between items-center text-sm">
                 <span className="text-slate-200 flex items-center gap-2">

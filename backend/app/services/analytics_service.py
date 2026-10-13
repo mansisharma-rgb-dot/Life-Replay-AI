@@ -7,8 +7,8 @@ class AnalyticsService:
     @staticmethod
     def _get_date_cutoff(days, user_id=None):
         today = date.today()
-        if user_id:
-            user = db.session.get(User, user_id)
+        if user_id is not None:
+            user = db.session.get(User, int(user_id))
             if user and user.timezone and user.timezone != 'UTC':
                 try:
                     import zoneinfo
@@ -21,6 +21,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_overview(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         user = db.session.get(User, user_id)
         if not user:
@@ -36,7 +37,7 @@ class AnalyticsService:
             DailyCheckin.is_completed == True
         ).first()
         
-        total_checkins = checkin_stats[0] or 0
+        total_checkins = checkin_stats[0] if (checkin_stats and checkin_stats[0] is not None) else 0
         completion_rate = int((total_checkins / days) * 100) if days > 0 else 0
         
         # Aggregates from activities
@@ -52,10 +53,10 @@ class AnalyticsService:
             DailyCheckin.is_completed == True
         ).first()
 
-        total_study = (act_stats[0] or 0.0) + (act_stats[1] or 0.0)
-        total_exercise = (act_stats[2] or 0) / 60.0
-        avg_sleep = act_stats[3] or 0.0
-        avg_water = act_stats[4] or 0.0
+        total_study = ((act_stats[0] or 0.0) + (act_stats[1] or 0.0)) if act_stats else 0.0
+        total_exercise = ((act_stats[2] or 0) / 60.0) if act_stats else 0.0
+        avg_sleep = (act_stats[3] or 0.0) if act_stats else 0.0
+        avg_water = (act_stats[4] or 0.0) if act_stats else 0.0
         
         # Average Life Score
         ls_avg = db.session.query(func.avg(LifeScore.score)).filter(
@@ -71,14 +72,14 @@ class AnalyticsService:
         ).scalar() or 0.0
         
         return {
-            "averageLifeScore": round(ls_avg),
-            "currentStreak": user.current_streak,
-            "longestStreak": user.longest_streak,
-            "totalXp": user.total_xp,
-            "currentLevel": user.level,
+            "averageLifeScore": round(ls_avg) if ls_avg is not None else 0,
+            "currentStreak": user.current_streak or 0,
+            "longestStreak": user.longest_streak or 0,
+            "totalXp": user.total_xp or 0,
+            "currentLevel": user.level or 1,
             "totalCheckins": total_checkins,
             "completionRate": completion_rate,
-            "averageMood": round(mood_avg, 1),
+            "averageMood": round(mood_avg, 1) if mood_avg is not None else 0.0,
             "totalStudyHours": round(total_study, 1),
             "totalExerciseHours": round(total_exercise, 1),
             "averageSleep": round(avg_sleep, 1),
@@ -94,6 +95,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_life_score_analytics(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         scores = LifeScore.query.filter(
             LifeScore.user_id == user_id,
@@ -137,6 +139,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_mood_analytics(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         logs = db.session.query(MoodLog, DailyCheckin.date).join(DailyCheckin).filter(
             DailyCheckin.user_id == user_id,
@@ -207,6 +210,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_habit_analytics(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         logs = db.session.query(HabitLog).join(DailyCheckin).filter(
             DailyCheckin.user_id == user_id,
@@ -264,6 +268,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_productivity_analytics(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         records = db.session.query(Activities, DailyCheckin.date, DailyCheckin.id).join(DailyCheckin).filter(
             DailyCheckin.user_id == user_id,
@@ -336,6 +341,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_sleep_analytics(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         records = db.session.query(Activities.sleep_hours, DailyCheckin.date).join(DailyCheckin).filter(
             DailyCheckin.user_id == user_id,
@@ -377,6 +383,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_water_analytics(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         records = db.session.query(Activities.water_intake_ml, DailyCheckin.date).join(DailyCheckin).filter(
             DailyCheckin.user_id == user_id,
@@ -405,6 +412,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_goal_progress(user_id):
+        user_id = int(user_id)
         goals = Goal.query.filter_by(user_id=user_id).all()
         if not goals:
             return {"completedGoals": 0, "pendingGoals": 0, "completionRate": 0, "goals": []}, 200
@@ -434,6 +442,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_achievements(user_id):
+        user_id = int(user_id)
         achs = Achievement.query.filter_by(user_id=user_id).order_by(Achievement.unlocked_at.desc()).all()
         
         recent = []
@@ -455,6 +464,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_correlations(user_id, days):
+        user_id = int(user_id)
         cutoff = AnalyticsService._get_date_cutoff(days, user_id)
         records = db.session.query(DailyCheckin.date, Activities.sleep_hours, MoodLog.mood_score).join(
             Activities, Activities.daily_checkin_id == DailyCheckin.id

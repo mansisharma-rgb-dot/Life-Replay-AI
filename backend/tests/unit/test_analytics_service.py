@@ -98,3 +98,41 @@ def test_get_life_score_moving_average(app, user):
     actual_moving_averages = [h['movingAverage'] for h in res['history']]
     
     assert actual_moving_averages == expected_moving_averages
+
+def test_string_user_id_support(app, user):
+    """Verify that passing user_id as a string (as returned by get_jwt_identity()) works cleanly across services."""
+    str_id = str(user.id)
+    res, status = AnalyticsService.get_overview(str_id, 30)
+    assert status == 200
+    assert res['totalCheckins'] == 0
+    assert res['currentStreak'] == 0
+    assert res['totalXp'] == 0
+
+    res_ls, status_ls = AnalyticsService.get_life_score_analytics(str_id, 30)
+    assert status_ls == 200
+    assert res_ls['average'] == 0
+
+    res_mood, status_mood = AnalyticsService.get_mood_analytics(str_id, 30)
+    assert status_mood == 200
+    assert res_mood['averageMood'] == 0
+
+    res_prod, status_prod = AnalyticsService.get_productivity_analytics(str_id, 30)
+    assert status_prod == 200
+    assert res_prod['screenTime'] == 0
+
+    res_sleep, status_sleep = AnalyticsService.get_sleep_analytics(str_id, 30)
+    assert status_sleep == 200
+    assert res_sleep['averageSleep'] == 0
+
+    res_water, status_water = AnalyticsService.get_water_analytics(str_id, 30)
+    assert status_water == 200
+    assert res_water['averageIntake'] == 0
+
+    res_goals, status_goals = AnalyticsService.get_goal_progress(str_id)
+    assert status_goals == 200
+    assert res_goals['completedGoals'] == 0
+
+    res_achs, status_achs = AnalyticsService.get_achievements(str_id)
+    assert status_achs == 200
+    assert res_achs['unlockedCount'] == 0
+

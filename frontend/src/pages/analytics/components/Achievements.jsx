@@ -31,7 +31,7 @@ export default function Achievements({ data }) {
         <div className="flex-1 mt-2">
           <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Recent Unlocks</h4>
           <div className="space-y-3">
-            {data.recent.map((badge, idx) => (
+            {(data.recent || []).map((badge, idx) => (
               <div key={badge.id} className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-surface-800 border border-slate-700 flex items-center justify-center text-lg">
                   {badge.icon}

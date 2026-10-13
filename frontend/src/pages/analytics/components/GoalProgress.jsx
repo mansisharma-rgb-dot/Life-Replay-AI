@@ -14,7 +14,7 @@ export default function GoalProgress({ data }) {
     >
       <div className="flex flex-col h-full overflow-hidden">
         <div className="space-y-4 overflow-y-auto pr-2 custom-scrollbar flex-1 pb-4">
-          {data.goals.map((goal) => {
+          {(data.goals || []).map((goal) => {
             const percentage = Math.min(100, Math.round((goal.progress / goal.target) * 100));
             return (
               <div key={goal.id} className="bg-surface-800/40 p-3 rounded-xl border border-slate-700/50">

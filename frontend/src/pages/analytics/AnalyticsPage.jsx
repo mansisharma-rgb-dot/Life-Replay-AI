@@ -25,11 +25,8 @@ export default function AnalyticsPage() {
   const fetchData = async (range) => {
     setLoading(true);
     try {
-      // Fetch all metrics concurrently
-      const [
-        overview, lifeScore, mood, habits, 
-        productivity, sleep, water, goals, achievements, correlations
-      ] = await Promise.all([
+      // Fetch all metrics concurrently with graceful individual degradation
+      const results = await Promise.allSettled([
         analyticsApi.getOverview(range),
         analyticsApi.getLifeScoreAnalytics(range),
         analyticsApi.getMoodAnalytics(range),
@@ -42,9 +39,33 @@ export default function AnalyticsPage() {
         analyticsApi.getCorrelations(range)
       ]);
 
+      const anySuccess = results.some(r => r.status === 'fulfilled');
+      if (!anySuccess) {
+        throw new Error("All analytics endpoints failed to respond");
+      }
+
+      const getVal = (idx, fallback) => {
+        if (results[idx].status === 'fulfilled' && results[idx].value) {
+          return results[idx].value;
+        }
+        return fallback;
+      };
+
       setData({
-        overview, lifeScore, mood, habits, 
-        productivity, sleep, water, goals, achievements, correlations
+        overview: getVal(0, {
+          averageLifeScore: 0, currentStreak: 0, longestStreak: 0, totalXp: 0, currentLevel: 1,
+          totalCheckins: 0, completionRate: 0, averageMood: 0, totalStudyHours: 0, totalExerciseHours: 0,
+          averageSleep: 0, averageWaterIntake: 0, trends: {}
+        }),
+        lifeScore: getVal(1, { average: 0, highest: 0, lowest: 0, history: [] }),
+        mood: getVal(2, { averageMood: 0, bestMoodDay: '-', worstMoodDay: '-', distribution: [], history: [] }),
+        habits: getVal(3, { completionRate: 0, consistencyScore: 0, currentStreak: 0, longestStreak: 0, mostCompleted: { name: '-', count: 0 }, leastCompleted: { name: '-', count: 0 }, habits: [] }),
+        productivity: getVal(4, { studyHours: 0, workHours: 0, readingHours: 0, meditationHours: 0, exerciseHours: 0, screenTime: 0, deepWork: 0, distribution: [], history: [] }),
+        sleep: getVal(5, { averageSleep: 0, bestSleepDay: '-', worstSleepDay: '-', history: [] }),
+        water: getVal(6, { averageIntake: 0, goalCompletion: 0, history: [] }),
+        goals: getVal(7, { completedGoals: 0, pendingGoals: 0, completionRate: 0, goals: [] }),
+        achievements: getVal(8, { unlockedCount: 0, totalAvailable: 50, newestBadge: null, rarestBadge: null, recent: [] }),
+        correlations: getVal(9, { correlations: [], ai_interpretation: null })
       });
     } catch (error) {
       console.error("Failed to load analytics:", error);

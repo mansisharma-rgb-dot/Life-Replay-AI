@@ -50,6 +50,7 @@ class CorrelationService:
 
     @staticmethod
     def get_correlations(user_id, days):
+        user_id = int(user_id)
         cutoff = date.today() - timedelta(days=days - 1)
         
         # We need a unified query that joins all the necessary daily data
