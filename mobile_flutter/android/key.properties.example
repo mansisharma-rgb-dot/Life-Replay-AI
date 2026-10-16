@@ -1,0 +1,7 @@
+# Android release keystore configuration template
+# Copy this file to 'key.properties' in this directory (mobile_flutter/android/key.properties)
+# Do NOT commit 'key.properties' to git. It is ignored by .gitignore.
+keyAlias=
+keyPassword=
+storeFile=C:\\Users\\Mansi\\.android\\lifereplay_release.keystore
+storePassword=

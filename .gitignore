@@ -41,3 +41,8 @@ key.properties
 *.apk
 *.aab
 
+# Temporary screenshots
+screenshot_*.png
+phone_test_*.png
+checkin_step*.png
+
