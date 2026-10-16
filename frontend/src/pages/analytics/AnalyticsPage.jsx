@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Download, RefreshCw } from 'lucide-react';
+import { Calendar, Download, RefreshCw, AlertCircle, Sparkles } from 'lucide-react';
 import { analyticsApi } from '@api/analyticsApi';
 
 // Components
@@ -21,9 +21,11 @@ export default function AnalyticsPage() {
   const [timeRange, setTimeRange] = useState('30d'); // 7d, 30d, 90d, 1y
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   const fetchData = async (range) => {
     setLoading(true);
+    setError(null);
     try {
       // Fetch all metrics concurrently with graceful individual degradation
       const results = await Promise.allSettled([
@@ -41,7 +43,7 @@ export default function AnalyticsPage() {
 
       const anySuccess = results.some(r => r.status === 'fulfilled');
       if (!anySuccess) {
-        throw new Error("All analytics endpoints failed to respond");
+        throw new Error("Unable to connect to the analytics engine. Please try again.");
       }
 
       const getVal = (idx, fallback) => {
@@ -67,8 +69,9 @@ export default function AnalyticsPage() {
         achievements: getVal(8, { unlockedCount: 0, totalAvailable: 50, newestBadge: null, rarestBadge: null, recent: [] }),
         correlations: getVal(9, { correlations: [], ai_interpretation: null })
       });
-    } catch (error) {
-      console.error("Failed to load analytics:", error);
+    } catch (err) {
+      console.error("Failed to load analytics:", err);
+      setError(err.message || "Failed to load analytics data.");
       toast.error("Failed to load analytics data.");
     } finally {
       setLoading(false);
@@ -85,6 +88,27 @@ export default function AnalyticsPage() {
 
   if (loading && !data) {
     return <PageSpinner />;
+  }
+
+  if (!loading && !data && error) {
+    return (
+      <div className="max-w-xl mx-auto my-16 p-8 glass-card bg-surface-900/60 rounded-2xl border border-rose-500/20 text-center space-y-4">
+        <div className="w-14 h-14 mx-auto rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+          <AlertCircle className="w-7 h-7" />
+        </div>
+        <h2 className="text-xl font-bold text-white">Unable to Load Analytics</h2>
+        <p className="text-sm text-slate-400 max-w-md mx-auto">
+          {error}
+        </p>
+        <button
+          onClick={() => fetchData(timeRange)}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-medium shadow-glow-primary transition-all text-sm"
+        >
+          <RefreshCw className="w-4 h-4" />
+          Retry Analytics
+        </button>
+      </div>
+    );
   }
 
   return (

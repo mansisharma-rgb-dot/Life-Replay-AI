@@ -64,3 +64,39 @@ def get_weekly_report():
         
     return jsonify(report), 200
 
+@reports_bp.route('/range', methods=['GET'])
+@jwt_required()
+def get_range_report():
+    user_id = get_jwt_identity()
+    start_date_str = request.args.get('start_date')
+    end_date_str = request.args.get('end_date')
+    
+    from datetime import date, timedelta
+    today = date.today()
+    
+    start_date = None
+    end_date = None
+    
+    if start_date_str:
+        try:
+            start_date = date.fromisoformat(start_date_str.split('T')[0])
+        except Exception:
+            start_date = None
+            
+    if end_date_str:
+        try:
+            end_date = date.fromisoformat(end_date_str.split('T')[0])
+        except Exception:
+            end_date = None
+            
+    if not start_date:
+        start_date = today - timedelta(days=30)
+    if not end_date:
+        end_date = today
+
+    report, status_code = MonthlyReportService.get_weekly_report(user_id, start_date=start_date, end_date=end_date)
+    if status_code != 200:
+        return jsonify({"message": "Failed to generate report"}), status_code
+        
+    return jsonify(report), 200
+

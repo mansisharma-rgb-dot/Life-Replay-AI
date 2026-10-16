@@ -36,3 +36,8 @@ scratch/
 # Signing & Keystores
 *.keystore
 *.jks
+key.properties
+**/key.properties
+*.apk
+*.aab
+

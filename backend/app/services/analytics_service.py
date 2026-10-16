@@ -27,6 +27,22 @@ class AnalyticsService:
         if not user:
             return None, 404
 
+        def _to_float(val, default=0.0):
+            if val is None:
+                return default
+            try:
+                return float(val)
+            except (ValueError, TypeError):
+                return default
+
+        def _to_int(val, default=0):
+            if val is None:
+                return default
+            try:
+                return int(val)
+            except (ValueError, TypeError):
+                return default
+
         # Aggregates from daily checkins
         checkin_stats = db.session.query(
             func.count(DailyCheckin.id),
@@ -37,49 +53,61 @@ class AnalyticsService:
             DailyCheckin.is_completed == True
         ).first()
         
-        total_checkins = checkin_stats[0] if (checkin_stats and checkin_stats[0] is not None) else 0
+        total_checkins = _to_int(checkin_stats[0]) if (checkin_stats and checkin_stats[0] is not None) else 0
         completion_rate = int((total_checkins / days) * 100) if days > 0 else 0
         
-        # Aggregates from activities
+        # Aggregates from activities with explicit join
         act_stats = db.session.query(
             func.sum(Activities.study_hours),
             func.sum(Activities.work_hours),
             func.sum(Activities.exercise_minutes),
             func.avg(Activities.sleep_hours),
             func.avg(Activities.water_intake_ml)
-        ).join(DailyCheckin).filter(
+        ).join(
+            DailyCheckin, Activities.daily_checkin_id == DailyCheckin.id
+        ).filter(
             DailyCheckin.user_id == user_id,
             DailyCheckin.date >= cutoff,
             DailyCheckin.is_completed == True
         ).first()
 
-        total_study = ((act_stats[0] or 0.0) + (act_stats[1] or 0.0)) if act_stats else 0.0
-        total_exercise = ((act_stats[2] or 0) / 60.0) if act_stats else 0.0
-        avg_sleep = (act_stats[3] or 0.0) if act_stats else 0.0
-        avg_water = (act_stats[4] or 0.0) if act_stats else 0.0
+        study_sum = _to_float(act_stats[0]) if act_stats else 0.0
+        work_sum = _to_float(act_stats[1]) if act_stats else 0.0
+        exercise_sum = _to_float(act_stats[2]) if act_stats else 0.0
+        sleep_avg = _to_float(act_stats[3]) if act_stats else 0.0
+        water_avg = _to_float(act_stats[4]) if act_stats else 0.0
+
+        total_study = study_sum + work_sum
+        total_exercise = exercise_sum / 60.0
+        avg_sleep = sleep_avg
+        avg_water = water_avg
         
         # Average Life Score
         ls_avg = db.session.query(func.avg(LifeScore.score)).filter(
             LifeScore.user_id == user_id,
             LifeScore.date >= cutoff
-        ).scalar() or 0.0
+        ).scalar()
+        ls_val = _to_float(ls_avg)
 
-        # Average Mood
-        mood_avg = db.session.query(func.avg(MoodLog.mood_score)).join(DailyCheckin).filter(
+        # Average Mood with explicit join
+        mood_avg = db.session.query(func.avg(MoodLog.mood_score)).join(
+            DailyCheckin, MoodLog.daily_checkin_id == DailyCheckin.id
+        ).filter(
             DailyCheckin.user_id == user_id,
             DailyCheckin.date >= cutoff,
             DailyCheckin.is_completed == True
-        ).scalar() or 0.0
+        ).scalar()
+        mood_val = _to_float(mood_avg)
         
         return {
-            "averageLifeScore": round(ls_avg) if ls_avg is not None else 0,
-            "currentStreak": user.current_streak or 0,
-            "longestStreak": user.longest_streak or 0,
-            "totalXp": user.total_xp or 0,
-            "currentLevel": user.level or 1,
+            "averageLifeScore": round(ls_val),
+            "currentStreak": _to_int(user.current_streak, 0),
+            "longestStreak": _to_int(user.longest_streak, 0),
+            "totalXp": _to_int(user.total_xp, 0),
+            "currentLevel": _to_int(user.level, 1),
             "totalCheckins": total_checkins,
             "completionRate": completion_rate,
-            "averageMood": round(mood_avg, 1) if mood_avg is not None else 0.0,
+            "averageMood": round(mood_val, 1),
             "totalStudyHours": round(total_study, 1),
             "totalExerciseHours": round(total_exercise, 1),
             "averageSleep": round(avg_sleep, 1),

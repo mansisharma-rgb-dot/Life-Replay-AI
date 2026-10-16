@@ -101,3 +101,26 @@ def test_monthly_report_user_isolation(client, app, auth_headers, test_user):
     
     # We added one record for test_user in previous test, so it should be exactly 1
     assert data['metrics']['total_checkin_days'] == 1
+
+def test_range_report(client, app, auth_headers, test_user):
+    """Test getting a custom date-range report."""
+    with app.app_context():
+        checkin_date = date(2026, 8, 15)
+        chk = DailyCheckin(user_id=test_user["id"], date=checkin_date, daily_rating=4, is_completed=True)
+        db.session.add(chk)
+        db.session.commit()
+
+        act = Activities(daily_checkin_id=chk.id, study_hours=3, work_hours=2, sleep_hours=8)
+        db.session.add(act)
+        mood = MoodLog(daily_checkin_id=chk.id, mood_score=9)
+        db.session.add(mood)
+        db.session.commit()
+
+    response = client.get('/api/reports/range?start_date=2026-08-01&end_date=2026-08-31', headers=auth_headers)
+    assert response.status_code == 200
+    data = response.get_json()
+    assert 'metrics' in data
+    assert 'period' in data
+    assert data['empty'] is False
+    assert data['metrics']['total_checkin_days'] >= 1
+    assert data['metrics']['total_study_hours'] == 3.0

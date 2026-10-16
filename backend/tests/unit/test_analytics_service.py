@@ -50,6 +50,11 @@ def test_get_overview_with_data(app, user):
     assert res['totalStudyHours'] == 2.0
     assert res['averageLifeScore'] == 85
 
+    # Verify JSON serializability (must never raise TypeError for Decimal or unhandled objects)
+    import json
+    serialized = json.dumps(res)
+    assert isinstance(serialized, str)
+
 def test_get_habit_analytics(app, user):
     d = date.today()
     c = DailyCheckin(user_id=user.id, date=d, is_completed=True)

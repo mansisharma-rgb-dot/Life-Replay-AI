@@ -20,6 +20,8 @@ def get_overview():
     user_id = int(get_jwt_identity())
     days = get_days_from_range(request.args.get('timeRange', '30d'))
     response_data, status_code = AnalyticsService.get_overview(user_id, days)
+    if response_data is None:
+        return jsonify({'error': 'User not found', 'success': False}), status_code
     return jsonify(response_data), status_code
 
 @analytics_bp.route('/life-score', methods=['GET'])

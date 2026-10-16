@@ -326,6 +326,7 @@ class DailyCheckinService:
             
         return {
             'items': items,
+            'checkins': items,
             'total': pagination.total,
             'pages': pagination.pages,
             'current_page': page
